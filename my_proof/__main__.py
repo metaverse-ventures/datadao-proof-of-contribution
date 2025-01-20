@@ -23,6 +23,7 @@ def load_config() -> Dict[str, Any]:
         'dlp_id': 24,  # DLP ID defaults to 24
         'input_dir': INPUT_DIR,
         'validator_base_api_url': os.environ.get('VALIDATOR_BASE_API_URL', None),
+        'jwt_secret_key': os.environ.get('JWT_SECRET_KEY'),
         'use_sealing': os.path.isdir(SEALED_DIR)
     }
     logging.info(f"Using config: {json.dumps(config, indent=2)}")
