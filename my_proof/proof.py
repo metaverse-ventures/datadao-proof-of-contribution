@@ -5,7 +5,7 @@ from typing import Dict, Any
 import requests
 from jwt import encode as jwt_encode
 import pandas as pd
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 
 from my_proof.models.proof_response import ProofResponse
 
@@ -35,44 +35,6 @@ TASK_DATA_TYPE_MAPPING = {
         "FARCASTER_USERINFO": 50,
     },
 }
-
-# Contribution subtype weights
-# CONTRIBUTION_SUBTYPE_WEIGHTS = {
-#     # "YOUTUBE_HISTORY": 1.5,
-#     # "YOUTUBE_PLAYLIST": 1.2,
-#     # "YOUTUBE_SUBSCRIBERS": 1.3,
-#     # "NETFLIX_HISTORY": 1.4,
-#     # "NETFLIX_FAVORITE": 1.1,
-#     # "SPOTIFY_PLAYLIST": 1.2,
-#     # "SPOTIFY_HISTORY": 1.3,
-#     # "AMAZON_PRIME_VIDEO": 1.4,
-#     # "AMAZON_ORDER_HISTORY": 1.1,
-#     # "TWITTER_USERINFO": 1.0,
-#     # "FARCASTER_USERINFO": 1.1,
-
-#     YOUTUBE_SUBSCRIBERS,
-#     YOUTUBE_CHANNEL_DATA,
-#     YOUTUBE_CREATOR_PLAYLIST
-#     YOUTUBE_STUDIO
-
-#     AMAZON_PRIME_VIDEO # anticipated
-#     AMAZON_ORDER_HISTORY # have
-
-#     SPOTIFY_PLAYLIST
-#     SPOTIFY_HISTORY
-
-#     NETFLIX_HISTORY      # have
-#     NETFLIX_FAVORITE
-
-#     TWITTER_USERINFO    # have
-
-#     FARCASTER_USERINFO  # have
-
-#     COINMARKETCAP_USER_WATCHLIST # have
-
-#     LINKEDIN_USER_INFO   # have
-#     TRIP_USER_DETAILS    # have
-# }
 
 points = {
     'YOUTUBE_SUBSCRIBERS': 50,
@@ -118,12 +80,13 @@ class Proof:
                 logging.info(f"Processing file: {input_filename}")
 
                 # jwt_token = self.generate_jwt_token() # TODO: Uncomment
+                # data = self.extract_wallet_address_and_subtypes(input_data) # TODO: Uncomment
                 # contribution_score_result = self.calculate_contribution_score(input_data)
                 
                 proof_response_object['uniqueness'] = 1.0  # uniqueness is validated at the time of submission
                 proof_response_object['quality'] = self.calculate_quality_score(input_data)
                 proof_response_object['ownership'] = 1.0
-                # proof_response_object['ownership'] = self.calculate_ownership_score(jwt_token, input_data) # TODO: Uncomment
+                # proof_response_object['ownership'] = self.calculate_ownership_score(jwt_token, data) # TODO: Uncomment
                 proof_response_object['authenticity'] = self.calculate_authenticity_score(input_data)
 
                 if proof_response_object['authenticity'] < 1.0:
@@ -132,10 +95,10 @@ class Proof:
                 # Calculate the final score
                 proof_response_object['score'] = self.calculate_final_score(proof_response_object)
 
-                proof_response_object['attributes'] = {
-                    # 'normalizedContributionScore': contribution_score_result['normalized_dynamic_score'],
-                    # 'totalContributionScore': contribution_score_result['total_dynamic_score'],
-                }
+                # proof_response_object['attributes'] = {
+                #     # 'normalizedContributionScore': contribution_score_result['normalized_dynamic_score'],
+                #     # 'totalContributionScore': contribution_score_result['total_dynamic_score'],
+                # }
 
         logging.info(f"Proof response: {proof_response_object}")
         return proof_response_object
@@ -143,36 +106,21 @@ class Proof:
     def generate_jwt_token(self):
         secret_key = self.config.get('jwt_secret_key', 'default_secret')
         expiration_time = self.config.get('jwt_expiration_time', 180)
-        return jwt_encode({}, secret_key, algorithm='HS256')
-
-    def calculate_contribution_score(self, data_list: Dict[str, Any]) -> Dict[str, float]:
-        contributions = data_list.get('contribution', [])
-
-        total_dynamic_score = 0
-        for item in contributions:
-            type_ = item.get('type')
-            task_subtype = item.get('taskSubType')
-
-            if type_ and task_subtype:
-                base_score = TASK_DATA_TYPE_MAPPING.get(type_, {}).get(task_subtype, 0)
-                weight = CONTRIBUTION_SUBTYPE_WEIGHTS.get(task_subtype, 1)
-                total_dynamic_score += base_score * weight
-
-        if len(contributions) > CONTRIBUTION_THRESHOLD:
-            total_dynamic_score += EXTRA_POINTS
-
-        max_possible_score = sum(
-            base * CONTRIBUTION_SUBTYPE_WEIGHTS.get(subtype, 1)
-            for type_, subtypes in TASK_DATA_TYPE_MAPPING.items()
-            for subtype, base in subtypes.items()
-        )
-
-        normalized_dynamic_score = min(total_dynamic_score / max_possible_score, 1)
-
-        return {
-            'total_dynamic_score': total_dynamic_score,
-            'normalized_dynamic_score': normalized_dynamic_score,
+        # Set the expiration time to 3 minutes from now
+        exp = datetime.now(timezone.utc) + timedelta(seconds=expiration_time)
+        
+        payload = {
+            'exp': exp
         }
+        
+        # Encode the JWT
+        token = jwt_encode(payload, secret_key, algorithm='HS256')
+        return token
+
+    def extract_wallet_address_and_subtypes(self, input_data):
+        wallet_address = input_data.get('walletAddress')
+        subType = [contribution.get('taskSubType') for contribution in input_data.get('contribution', [])]
+        return {wallet_address, subType}
 
     def calculate_authenticity_score(self, data_list: Dict[str, Any]) -> float:
         contributions = data_list.get('contribution', [])
@@ -267,7 +215,7 @@ class Proof:
             interval_counts.append(count)
 
         # Calculate the scores for each interval
-        interval_scores = [get_watch_history_score(count, task_subtype) for count in interval_counts]
+        interval_scores = [self.get_watch_history_score(count, task_subtype) for count in interval_counts]
 
         # Calculate the overall score (average of interval scores)
         overall_score = sum
@@ -310,7 +258,7 @@ class Proof:
             # Can be used for AMAZON_PRIME_VIDEO
             if task_subtype == 'NETFLIX_HISTORY':
                 # Just provide the required parameters securedSharedData['csv']
-                score, interval_scores = calculate_watch_score(securedSharedData['csv'], task_subtype)
+                score, interval_scores = self.calculate_watch_score(securedSharedData['csv'], task_subtype)
                 final_scores[task_subtype] = score
 
             elif task_subtype in ['AMAZON_ORDER_HISTORY', 'TRIP_USER_DETAILS']:
