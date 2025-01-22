@@ -73,37 +73,64 @@
             }
         },
         {
+            "type": "COINMARKETCAP",
+            "taskSubType": "COINMARKETCAP_USER_WATCHLIST",
+            "claimedDate": "2025-01-07T07:04:15.421Z",
+            "witnesses": "wss://witness.doom.org/ws",
+            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
+            "securedSharedData": {
+                "coins": {
+                    "0": "Bitcoin BTC",
+                    "1": "Ethereum ETH",
+                    "2": "Tether USDT",
+                    "3": "XRP XRP",
+                    "4": "USDC USDC",
+                    "5": "Uniswap UNI",
+                    "6": "Internet Computer ICP"
+                },
+                "pairs": {
+                    "0": "shigga/SOL the black sheep",
+                    "1": "SHIBAI/SOL Shiba Inu AI",
+                    "2": "WULFY/SOL WULFY"
+                }
+            }
+        },
+        {
             "type": "LINKEDIN",
             "taskSubType": "LINKEDIN_USER_INFO",
             "claimedDate": "2025-01-07T07:04:15.421Z",
             "witnesses": "wss://witness.doom.org/ws",
             "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
-        
-        "securedSharedData": {
-            "experience": [
-                {
-                    "company": "Tech Corp",
-                    "position": "Software Engineer",
-                    "startDate": "2020-01-01",
-                    "endDate": "2022-01-01"
-                }
-            ],
-            "about": "Experienced software engineer with a passion for developing innovative programs.",
-            "profile": "https://www.linkedin.com/in/john_doe",
-            "education": [
-                {
-                    "institution": "University of Technology",
-                    "degree": "Bachelor of Science in Computer Science",
-                    "startDate": "2015-01-01",
-                    "endDate": "2019-01-01"
-                }
-            ],
-            "skills": ["JavaScript", "Python", "React", "Node.js"],
-            "name": "John Doe",
-            "linkedinHandle": "john_doe",
-            "connectionCount": 500,
-            "followersCount": 1000
-        }
+            "securedSharedData": {
+                "experience": [
+                    {
+                        "company": "Tech Corp",
+                        "position": "Software Engineer",
+                        "startDate": "2020-01-01",
+                        "endDate": "2022-01-01"
+                    }
+                ],
+                "about": "Experienced software engineer with a passion for developing innovative programs.",
+                "profile": "https://www.linkedin.com/in/john_doe",
+                "education": [
+                    {
+                        "institution": "University of Technology",
+                        "degree": "Bachelor of Science in Computer Science",
+                        "startDate": "2015-01-01",
+                        "endDate": "2019-01-01"
+                    }
+                ],
+                "skills": [
+                    "JavaScript",
+                    "Python",
+                    "React",
+                    "Node.js"
+                ],
+                "name": "John Doe",
+                "linkedinHandle": "john_doe",
+                "connectionCount": 500,
+                "followersCount": 1000
+            }
         },
         {
             "type": "NETFLIX",
@@ -115,134 +142,518 @@
             "securedSharedData": {
                 "codeName": "S-Icarus-6.Abracadabra",
                 "csv": [
-                    {"Title": "Gangs of Godavari", "Date": "26/12/24"},
-                    {"Title": "Squid Game: Season 2: Friend or Foe", "Date": "26/12/24"},
-                    {"Title": "Squid Game: Season 2: O ﻿ X", "Date": "26/12/24"},
-                    {"Title": "Squid Game: Season 2: One More Game", "Date": "26/12/24"},
-                    {"Title": "Squid Game: Season 2: Six Legs", "Date": "26/12/24"},
-                    {"Title": "Squid Game: Season 2: 001", "Date": "26/12/24"},
-                    {"Title": "Squid Game: Season 2: Halloween Party", "Date": "26/12/24"},
-                    {"Title": "Squid Game: Season 2: Bread and Lottery", "Date": "26/12/24"},
-                    {"Title": "Squid Game: Season 1: Red Light, Green Light", "Date": "26/12/24"},
-                    {"Title": "Salaar", "Date": "23/12/24"},
-                    {"Title": "Animal", "Date": "19/12/24"},
-                    {"Title": "Jodhaa Akbar", "Date": "17/12/24"},
-                    {"Title": "Eega", "Date": "14/12/24"},
-                    {"Title": "Mad", "Date": "14/12/24"},
-                    {"Title": "Don", "Date": "12/12/24"},
-                    {"Title": "Mathu Vadalara 2", "Date": "11/12/24"},
-                    {"Title": "Irugapatru", "Date": "11/12/24"},
-                    {"Title": "The Good Doctor: Season 2: Stories", "Date": "09/12/24"},
-                    {"Title": "Lucky Baskhar", "Date": "09/12/24"},
-                    {"Title": "Amaran", "Date": "09/12/24"},
-                    {"Title": "Waltair Veerayya", "Date": "03/12/24"},
-                    {"Title": "Bagheera", "Date": "03/12/24"},
-                    {"Title": "Chhota Bheem and the Curse of Damyaan", "Date": "02/12/24"},
-                    {"Title": "Krishna Vrinda Vihari", "Date": "02/12/24"},
-                    {"Title": "Suits: Season 3: Yesterday’s Gone", "Date": "02/12/24"},
-                    {"Title": "Happy New Year", "Date": "29/11/24"},
-                    {"Title": "Bujjigadu Made In Chennai", "Date": "28/11/24"},
-                    {"Title": "Ae Dil Hai Mushkil", "Date": "27/11/24"},
-                    {"Title": "Suits: Season 3: Buried Secrets", "Date": "26/11/24"},
-                    {"Title": "Suits: Season 3: Stay", "Date": "26/11/24"},
-                    {"Title": "Suits: Season 3: Bad Faith", "Date": "26/11/24"},
-                    {"Title": "Suits: Season 3: Endgame", "Date": "26/11/24"},
-                    {"Title": "Suits: Season 3: She's Mine", "Date": "25/11/24"},
-                    {"Title": "Suits: Season 3: The Other Time", "Date": "25/11/24"},
-                    {"Title": "Suits: Season 3: Shadow of a Doubt", "Date": "24/11/24"},
-                    {"Title": "Suits: Season 3: Conflict of Interest", "Date": "24/11/24"},
-                    {"Title": "Suits: Season 3: Unfinished Business", "Date": "24/11/24"},
-                    {"Title": "Suits: Season 3: I Want You to Want Me", "Date": "23/11/24"},
-                    {"Title": "Suits: Season 3: The Arrangement", "Date": "23/11/24"},
-                    {"Title": "Suits: Season 2: War", "Date": "23/11/24"},
-                    {"Title": "Suits: Season 2: Normandy", "Date": "22/11/24"},
-                    {"Title": "Suits: Season 2: He's Back", "Date": "22/11/24"},
-                    {"Title": "Suits: Season 2: Zane Vs. Zane", "Date": "22/11/24"},
-                    {"Title": "Suits: Season 2: Blood in the Water", "Date": "22/11/24"},
-                    {"Title": "Bheeshma", "Date": "22/11/24"},
-                    {"Title": "Suits: Season 2: Blind-Sided", "Date": "21/11/24"},
-                    {"Title": "Suits: Season 2: High Noon", "Date": "21/11/24"},
-                    {"Title": "Suits: Season 2: Asterisk", "Date": "21/11/24"},
-                    {"Title": "Suits: Season 2: Rewind", "Date": "21/11/24"},
-                    {"Title": "Suits: Season 2: Sucker Punch", "Date": "21/11/24"},
-                    {"Title": "Suits: Season 2: All In", "Date": "21/11/24"},
-                    {"Title": "Suits: Season 2: Break Point", "Date": "21/11/24"},
-                    {"Title": "Suits: Season 2: Discovery", "Date": "21/11/24"},
-                    {"Title": "Suits: Season 2: Meet the New Boss", "Date": "20/11/24"},
-                    {"Title": "Spider-Man: No Way Home", "Date": "20/11/24"},
-                    {"Title": "Ben 10: Season 1: Washington B.C", "Date": "20/11/24"},
-                    {"Title": "Do Patti", "Date": "20/11/24"},
-                    {"Title": "Tegimpu", "Date": "19/11/24"},
-                    {"Title": "Thunivu", "Date": "19/11/24"},
-                    {"Title": "Devara", "Date": "11/11/24"},
-                    {"Title": "Scream 2", "Date": "10/11/24"},
-                    {"Title": "Scream", "Date": "09/11/24"},
-                    {"Title": "Tillu Square", "Date": "08/11/24"},
-                    {"Title": "Doctor (Telugu)", "Date": "07/11/24"},
-                    {"Title": "Suits: Season 2: The Choice", "Date": "06/11/24"},
-                    {"Title": "Suits: Season 2: She Knows", "Date": "06/11/24"},
-                    {"Title": "Suits: Season 1: Dog Fight", "Date": "06/11/24"},
-                    {"Title": "Suits: Season 1: Rules of the Game", "Date": "06/11/24"},
-                    {"Title": "Suits: Season 1: The Shelf Life", "Date": "06/11/24"},
-                    {"Title": "Chhota Bheem aur Krishna vs Zimbara", "Date": "05/11/24"},
-                    {"Title": "Chhota Bheem: The Rise of Kirmada", "Date": "05/11/24"},
-                    {"Title": "The Good Doctor: Season 2: Hubert", "Date": "04/11/24"},
-                    {"Title": "The Good Doctor: Season 2: Two-ply (or Not Two-ply)", "Date": "04/11/24"},
-                    {"Title": "The Good Doctor: Season 2: Carrots", "Date": "04/11/24"},
-                    {"Title": "The Good Doctor: Season 2: Tough Titmouse", "Date": "04/11/24"},
-                    {"Title": "The Good Doctor: Season 2: 36 Hours", "Date": "04/11/24"},
-                    {"Title": "The Good Doctor: Season 2: Middle Ground", "Date": "04/11/24"},
-                    {"Title": "The Good Doctor: Season 2: Hello", "Date": "04/11/24"},
-                    {"Title": "The Good Doctor: Season 1: More", "Date": "04/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Smile", "Date": "04/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Pain", "Date": "04/11/24"},
-                    {"Title": "Saripodhaa Sanivaaram", "Date": "03/11/24"},
-                    {"Title": "Guntur Kaaram", "Date": "03/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Heartfelt", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: She", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Seven Reasons", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Islands: Part 2", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Islands: Part 1", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Sacrifice", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Intangibles", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Apple", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: 22 Steps", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Not Fake", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Point Three Percent", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Pipes", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Oliver", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Mount Rushmore", "Date": "02/11/24"},
-                    {"Title": "The Good Doctor: Season 1: Burnt Food", "Date": "02/11/24"},
-                    {"Title": "Hi Nanna", "Date": "01/11/24"},
-                    {"Title": "Chhota Bheem: Dholakpur to Kathmandu", "Date": "01/11/24"},
-                    {"Title": "Chhota Bheem: Master of Shaolin", "Date": "01/11/24"},
-                    {"Title": "Beyblade Burst Rise: Ace Dragon! On the Rise!", "Date": "01/11/24"},
-                    {"Title": "Suits: Season 1: Undefeated", "Date": "30/10/24"},
-                    {"Title": "Suits: Season 1: Identity Crisis", "Date": "30/10/24"},
-                    {"Title": "Suits: Season 1: Play the Man", "Date": "30/10/24"},
-                    {"Title": "Suits: Season 1: Tricks of the Trade", "Date": "30/10/24"},
-                    {"Title": "Suits: Season 1: Bail Out", "Date": "30/10/24"},
-                    {"Title": "Suits: Season 1: Dirty Little Secrets", "Date": "30/10/24"},
-                    {"Title": "Suits: Season 1: Inside Track", "Date": "30/10/24"},
-                    {"Title": "Suits: Season 1: Errors and Omissions", "Date": "30/10/24"},
-                    {"Title": "Suits: Season 1: Pilot Part 1 & 2", "Date": "30/10/24"},
-                    {"Title": "Chhota Bheem aur Krishna", "Date": "30/10/24"},
-                    {"Title": "Cook Up A Storm", "Date": "30/10/24"},
-                    {"Title": "Better Call Saul: Season 1: Five-O", "Date": "30/10/24"},
-                    {"Title": "Better Call Saul: Season 1: Alpine Shepherd Boy", "Date": "30/10/24"},
-                    {"Title": "Berlin: Season 1: An Endangered Elephant", "Date": "29/10/24"},
-                    {"Title": "Berlin: Season 1: The Last Virgin in the Western World", "Date": "29/10/24"},
-                    {"Title": "Berlin: Season 1: Anchor and Lobo", "Date": "29/10/24"},
-                    {"Title": "Berlin: Season 1: The Energy of Love", "Date": "29/10/24"},
-                    {"Title": "Berlin: Season 1: Night of the Lemons", "Date": "29/10/24"},
-                    {"Title": "Berlin: Season 1: After Love", "Date": "29/10/24"},
-                    {"Title": "Berlin: Season 1: An Aquarium on Your Back", "Date": "29/10/24"},
-                    {"Title": "Berlin: Season 1: Full House of Embryos", "Date": "29/10/24"},
-                    {"Title": "Meiyazhagan", "Date": "28/10/24"},
-                    {"Title": "Better Call Saul: Season 1: Hero", "Date": "27/10/24"},
-                    {"Title": "Better Call Saul: Season 1: Nacho", "Date": "27/10/24"},
-                    {"Title": "Better Call Saul: Season 1: Mijo", "Date": "27/10/24"},
-                    {"Title": "Better Call Saul: Season 1: Uno", "Date": "27/10/24"}
+                    {
+                        "Title": "Gangs of Godavari",
+                        "Date": "26/12/24"
+                    },
+                    {
+                        "Title": "Squid Game: Season 2: Friend or Foe",
+                        "Date": "26/12/24"
+                    },
+                    {
+                        "Title": "Squid Game: Season 2: O ﻿ X",
+                        "Date": "26/12/24"
+                    },
+                    {
+                        "Title": "Squid Game: Season 2: One More Game",
+                        "Date": "26/12/24"
+                    },
+                    {
+                        "Title": "Squid Game: Season 2: Six Legs",
+                        "Date": "26/12/24"
+                    },
+                    {
+                        "Title": "Squid Game: Season 2: 001",
+                        "Date": "26/12/24"
+                    },
+                    {
+                        "Title": "Squid Game: Season 2: Halloween Party",
+                        "Date": "26/12/24"
+                    },
+                    {
+                        "Title": "Squid Game: Season 2: Bread and Lottery",
+                        "Date": "26/12/24"
+                    },
+                    {
+                        "Title": "Squid Game: Season 1: Red Light, Green Light",
+                        "Date": "26/12/24"
+                    },
+                    {
+                        "Title": "Salaar",
+                        "Date": "23/12/24"
+                    },
+                    {
+                        "Title": "Animal",
+                        "Date": "19/12/24"
+                    },
+                    {
+                        "Title": "Jodhaa Akbar",
+                        "Date": "17/12/24"
+                    },
+                    {
+                        "Title": "Eega",
+                        "Date": "14/12/24"
+                    },
+                    {
+                        "Title": "Mad",
+                        "Date": "14/12/24"
+                    },
+                    {
+                        "Title": "Don",
+                        "Date": "12/12/24"
+                    },
+                    {
+                        "Title": "Mathu Vadalara 2",
+                        "Date": "11/12/24"
+                    },
+                    {
+                        "Title": "Irugapatru",
+                        "Date": "11/12/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 2: Stories",
+                        "Date": "09/12/24"
+                    },
+                    {
+                        "Title": "Lucky Baskhar",
+                        "Date": "09/12/24"
+                    },
+                    {
+                        "Title": "Amaran",
+                        "Date": "09/12/24"
+                    },
+                    {
+                        "Title": "Waltair Veerayya",
+                        "Date": "03/12/24"
+                    },
+                    {
+                        "Title": "Bagheera",
+                        "Date": "03/12/24"
+                    },
+                    {
+                        "Title": "Chhota Bheem and the Curse of Damyaan",
+                        "Date": "02/12/24"
+                    },
+                    {
+                        "Title": "Krishna Vrinda Vihari",
+                        "Date": "02/12/24"
+                    },
+                    {
+                        "Title": "Suits: Season 3: Yesterday’s Gone",
+                        "Date": "02/12/24"
+                    },
+                    {
+                        "Title": "Happy New Year",
+                        "Date": "29/11/24"
+                    },
+                    {
+                        "Title": "Bujjigadu Made In Chennai",
+                        "Date": "28/11/24"
+                    },
+                    {
+                        "Title": "Ae Dil Hai Mushkil",
+                        "Date": "27/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 3: Buried Secrets",
+                        "Date": "26/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 3: Stay",
+                        "Date": "26/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 3: Bad Faith",
+                        "Date": "26/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 3: Endgame",
+                        "Date": "26/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 3: She's Mine",
+                        "Date": "25/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 3: The Other Time",
+                        "Date": "25/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 3: Shadow of a Doubt",
+                        "Date": "24/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 3: Conflict of Interest",
+                        "Date": "24/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 3: Unfinished Business",
+                        "Date": "24/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 3: I Want You to Want Me",
+                        "Date": "23/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 3: The Arrangement",
+                        "Date": "23/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: War",
+                        "Date": "23/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: Normandy",
+                        "Date": "22/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: He's Back",
+                        "Date": "22/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: Zane Vs. Zane",
+                        "Date": "22/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: Blood in the Water",
+                        "Date": "22/11/24"
+                    },
+                    {
+                        "Title": "Bheeshma",
+                        "Date": "22/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: Blind-Sided",
+                        "Date": "21/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: High Noon",
+                        "Date": "21/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: Asterisk",
+                        "Date": "21/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: Rewind",
+                        "Date": "21/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: Sucker Punch",
+                        "Date": "21/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: All In",
+                        "Date": "21/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: Break Point",
+                        "Date": "21/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: Discovery",
+                        "Date": "21/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: Meet the New Boss",
+                        "Date": "20/11/24"
+                    },
+                    {
+                        "Title": "Spider-Man: No Way Home",
+                        "Date": "20/11/24"
+                    },
+                    {
+                        "Title": "Ben 10: Season 1: Washington B.C",
+                        "Date": "20/11/24"
+                    },
+                    {
+                        "Title": "Do Patti",
+                        "Date": "20/11/24"
+                    },
+                    {
+                        "Title": "Tegimpu",
+                        "Date": "19/11/24"
+                    },
+                    {
+                        "Title": "Thunivu",
+                        "Date": "19/11/24"
+                    },
+                    {
+                        "Title": "Devara",
+                        "Date": "11/11/24"
+                    },
+                    {
+                        "Title": "Scream 2",
+                        "Date": "10/11/24"
+                    },
+                    {
+                        "Title": "Scream",
+                        "Date": "09/11/24"
+                    },
+                    {
+                        "Title": "Tillu Square",
+                        "Date": "08/11/24"
+                    },
+                    {
+                        "Title": "Doctor (Telugu)",
+                        "Date": "07/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: The Choice",
+                        "Date": "06/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 2: She Knows",
+                        "Date": "06/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 1: Dog Fight",
+                        "Date": "06/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 1: Rules of the Game",
+                        "Date": "06/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 1: The Shelf Life",
+                        "Date": "06/11/24"
+                    },
+                    {
+                        "Title": "Chhota Bheem aur Krishna vs Zimbara",
+                        "Date": "05/11/24"
+                    },
+                    {
+                        "Title": "Chhota Bheem: The Rise of Kirmada",
+                        "Date": "05/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 2: Hubert",
+                        "Date": "04/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 2: Two-ply (or Not Two-ply)",
+                        "Date": "04/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 2: Carrots",
+                        "Date": "04/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 2: Tough Titmouse",
+                        "Date": "04/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 2: 36 Hours",
+                        "Date": "04/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 2: Middle Ground",
+                        "Date": "04/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 2: Hello",
+                        "Date": "04/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: More",
+                        "Date": "04/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Smile",
+                        "Date": "04/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Pain",
+                        "Date": "04/11/24"
+                    },
+                    {
+                        "Title": "Saripodhaa Sanivaaram",
+                        "Date": "03/11/24"
+                    },
+                    {
+                        "Title": "Guntur Kaaram",
+                        "Date": "03/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Heartfelt",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: She",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Seven Reasons",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Islands: Part 2",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Islands: Part 1",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Sacrifice",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Intangibles",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Apple",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: 22 Steps",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Not Fake",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Point Three Percent",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Pipes",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Oliver",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Mount Rushmore",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "The Good Doctor: Season 1: Burnt Food",
+                        "Date": "02/11/24"
+                    },
+                    {
+                        "Title": "Hi Nanna",
+                        "Date": "01/11/24"
+                    },
+                    {
+                        "Title": "Chhota Bheem: Dholakpur to Kathmandu",
+                        "Date": "01/11/24"
+                    },
+                    {
+                        "Title": "Chhota Bheem: Master of Shaolin",
+                        "Date": "01/11/24"
+                    },
+                    {
+                        "Title": "Beyblade Burst Rise: Ace Dragon! On the Rise!",
+                        "Date": "01/11/24"
+                    },
+                    {
+                        "Title": "Suits: Season 1: Undefeated",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Suits: Season 1: Identity Crisis",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Suits: Season 1: Play the Man",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Suits: Season 1: Tricks of the Trade",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Suits: Season 1: Bail Out",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Suits: Season 1: Dirty Little Secrets",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Suits: Season 1: Inside Track",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Suits: Season 1: Errors and Omissions",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Suits: Season 1: Pilot Part 1 & 2",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Chhota Bheem aur Krishna",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Cook Up A Storm",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Better Call Saul: Season 1: Five-O",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Better Call Saul: Season 1: Alpine Shepherd Boy",
+                        "Date": "30/10/24"
+                    },
+                    {
+                        "Title": "Berlin: Season 1: An Endangered Elephant",
+                        "Date": "29/10/24"
+                    },
+                    {
+                        "Title": "Berlin: Season 1: The Last Virgin in the Western World",
+                        "Date": "29/10/24"
+                    },
+                    {
+                        "Title": "Berlin: Season 1: Anchor and Lobo",
+                        "Date": "29/10/24"
+                    },
+                    {
+                        "Title": "Berlin: Season 1: The Energy of Love",
+                        "Date": "29/10/24"
+                    },
+                    {
+                        "Title": "Berlin: Season 1: Night of the Lemons",
+                        "Date": "29/10/24"
+                    },
+                    {
+                        "Title": "Berlin: Season 1: After Love",
+                        "Date": "29/10/24"
+                    },
+                    {
+                        "Title": "Berlin: Season 1: An Aquarium on Your Back",
+                        "Date": "29/10/24"
+                    },
+                    {
+                        "Title": "Berlin: Season 1: Full House of Embryos",
+                        "Date": "29/10/24"
+                    },
+                    {
+                        "Title": "Meiyazhagan",
+                        "Date": "28/10/24"
+                    },
+                    {
+                        "Title": "Better Call Saul: Season 1: Hero",
+                        "Date": "27/10/24"
+                    },
+                    {
+                        "Title": "Better Call Saul: Season 1: Nacho",
+                        "Date": "27/10/24"
+                    },
+                    {
+                        "Title": "Better Call Saul: Season 1: Mijo",
+                        "Date": "27/10/24"
+                    },
+                    {
+                        "Title": "Better Call Saul: Season 1: Uno",
+                        "Date": "27/10/24"
+                    }
                 ]
             }
         }
