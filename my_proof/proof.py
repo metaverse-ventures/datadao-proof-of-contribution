@@ -151,8 +151,7 @@ class Proof:
 
             response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
 
-            return response.json().get('success', False) and 1.0 or 0.0
-            return 1.0
+            return 1.0 if response.status_code == 200 else 0.0
         except requests.exceptions.RequestException as e:
             logging.error(f"Error during API request: {e}")
             return 0.0
