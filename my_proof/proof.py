@@ -149,10 +149,7 @@ class Proof:
             headers = {
                 'Authorization': f'Bearer {jwt_token}',  # Attach JWT token in the Authorization header
             }
-            data.update({
-                'jwt_secret_key': self.config.get('jwt_secret_key'),
-                'jwt_token': jwt_token
-            })
+
             response = requests.post(self.config.get('validator_base_api_url'), json=data, headers=headers)
 
             response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
