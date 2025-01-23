@@ -82,8 +82,8 @@ class Proof:
 
                 logging.info(f"Processing file: {input_filename}")
 
-                jwt_token = self.generate_jwt_token() # TODO: Uncomment
                 data = self.extract_wallet_address_and_subtypes(input_data) # TODO: Uncomment
+                jwt_token = self.generate_jwt_token(data['walletAddress'])# TODO: Uncomment
                 # contribution_score_result = self.calculate_contribution_score(input_data)
                 
                 proof_response_object['uniqueness'] = 1.0  # uniqueness is validated at the time of submission
@@ -106,14 +106,16 @@ class Proof:
         logging.info(f"Proof response: {proof_response_object}")
         return proof_response_object
 
-    def generate_jwt_token(self):
+    def generate_jwt_token(self, wallet_address):
         secret_key = self.config.get('jwt_secret_key', 'default_secret')
-        expiration_time = self.config.get('jwt_expiration_time', 180)
-        # Set the expiration time to 3 minutes from now
+        expiration_time = self.config.get('jwt_expiration_time', 600)  # Set to 10 minutes (600 seconds)
+        
+        # Set the expiration time to 10 minutes from now
         exp = datetime.now(timezone.utc) + timedelta(seconds=expiration_time)
         
         payload = {
-            'exp': exp
+            'exp': exp,
+            'walletAddress': wallet_address  # Add wallet address to the payload
         }
         
         # Encode the JWT
