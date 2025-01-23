@@ -306,7 +306,7 @@ class Proof:
             total_secured_score += final_scores[task_subtype]
 
 
-        total_max_score = self.calculate_total_points(points)        
+        total_max_score = self.calculate_max_points(points)        
         # Calculate the normalized total score
         normalized_total_score = total_secured_score / total_max_score if total_max_score > 0 else 0
 
