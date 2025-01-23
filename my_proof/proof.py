@@ -88,7 +88,7 @@ class Proof:
                 
                 proof_response_object['uniqueness'] = 1.0  # uniqueness is validated at the time of submission
                 proof_response_object['quality'] = self.calculate_quality_score(input_data)
-                proof_response_object['ownership'] = 1.0
+                # proof_response_object['ownership'] = 1.0
                 proof_response_object['ownership'] = self.calculate_ownership_score(jwt_token, data) # TODO: Uncomment
                 proof_response_object['authenticity'] = self.calculate_authenticity_score(input_data)
 
