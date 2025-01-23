@@ -22,6 +22,7 @@ def load_config() -> Dict[str, Any]:
     config = {
         'dlp_id': 24,  # DLP ID defaults to 24
         'input_dir': INPUT_DIR,
+        'jwt_expiration_time': os.environ.get('JWT_EXPIRATION_TIME', 600),
         'validator_base_api_url': os.environ.get('VALIDATOR_BASE_API_URL', None),
         'jwt_secret_key': os.environ.get('JWT_SECRET_KEY'),
         'use_sealing': os.path.isdir(SEALED_DIR)
