@@ -123,7 +123,7 @@ class Proof:
     def extract_wallet_address_and_subtypes(self, input_data):
         wallet_address = input_data.get('walletAddress')
         subType = [contribution.get('taskSubType') for contribution in input_data.get('contribution', [])]
-        return  {'wallet_address': wallet_address, 'subType': subType}
+        return  {'walletAddress': wallet_address, 'subType': subType}
 
     def calculate_authenticity_score(self, data_list: Dict[str, Any]) -> float:
         contributions = data_list.get('contribution', [])
@@ -138,11 +138,10 @@ class Proof:
 
     def calculate_ownership_score(self, jwt_token: str, data: Dict[str, Any]) -> float:
 
-        logging.info(f"Calculating ownership score for data: {data} with JWT: {jwt_token}")
         if not jwt_token or not isinstance(jwt_token, str):
             raise ValueError('JWT token is required and must be a string')
-        if not data or not isinstance(data, dict) or 'walletAddress' not in data or not isinstance(data.get('subType'), list):
-            raise ValueError('Invalid data format. Ensure walletAddress is a string and subType is an array.')
+        if not data['walletAddress'] or len(data['subType']) == 0:
+            raise ValueError('Invalid data format. Ensure walletAddress is a non-empty string and subType is a non-empty array.')
 
         try:
             headers = {
@@ -152,7 +151,7 @@ class Proof:
 
             response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
 
-            # return response.json().get('success', False) and 1.0 or 0.0
+            return response.json().get('success', False) and 1.0 or 0.0
             return 1.0
         except requests.exceptions.RequestException as e:
             logging.error(f"Error during API request: {e}")
