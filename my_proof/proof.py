@@ -137,6 +137,8 @@ class Proof:
         return round(valid_count / len(contributions), 5) if contributions else 0
 
     def calculate_ownership_score(self, jwt_token: str, data: Dict[str, Any]) -> float:
+
+        logging.info(f"Calculating ownership score for data: {data} with JWT: {jwt_token}")
         if not jwt_token or not isinstance(jwt_token, str):
             raise ValueError('JWT token is required and must be a string')
         if not data or not isinstance(data, dict) or 'walletAddress' not in data or not isinstance(data.get('subType'), list):
