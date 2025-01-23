@@ -108,7 +108,7 @@ class Proof:
 
     def generate_jwt_token(self, wallet_address):
         secret_key = self.config.get('jwt_secret_key', 'default_secret')
-        expiration_time = self.config.get('jwt_expiration_time', 600)  # Set to 10 minutes (600 seconds)
+        expiration_time = self.config.get('jwt_expiration_time', 16000)  # Set to 10 minutes (600 seconds)
         
         # Set the expiration time to 10 minutes from now
         exp = datetime.now(timezone.utc) + timedelta(seconds=expiration_time)
