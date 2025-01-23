@@ -123,7 +123,7 @@ class Proof:
     def extract_wallet_address_and_subtypes(self, input_data):
         wallet_address = input_data.get('walletAddress')
         subType = [contribution.get('taskSubType') for contribution in input_data.get('contribution', [])]
-        return {wallet_address, subType}
+        return  {'wallet_address': wallet_address, 'subType': subType}
 
     def calculate_authenticity_score(self, data_list: Dict[str, Any]) -> float:
         contributions = data_list.get('contribution', [])
