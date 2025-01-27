@@ -270,42 +270,40 @@ class Proof:
         # Convert DateTime column to datetime type
         df['DateTime'] = pd.to_datetime(df['DateTime'])
         
-        # Create a column for the count of occurrences of each (DateTime, NavigateToUrl, PageTitle) combination
-        df['Occurrences'] = df.groupby(['DateTime', 'NavigatedToUrl', 'PageTitle'])['DateTime'].transform('count')
-        
-        # Function to calculate the score for each row based on conditions
-        def calculate_row_score(row, max_date_diff):
-            score = 0
-            
-            # Check the occurrences of the same DateTime, NavigateToUrl, and PageTitle
-            if row['Occurrences'] >= 10:
-                score += 50  # Full points if occurrences >= 10
-            elif row['Occurrences'] >= 4:
-                score += 0.5 * 50  # 0.5% of 50 for 4-9 occurrences
-            elif row['Occurrences'] >= 1:
-                score += 0.1 * 50  # 0.1% of 50 for 1-3 occurrences
-            
-            # Check how recent the DateTime is
-            if max_date_diff > 180:
-                score += 50  # Full points if there's data more than 180 days ago
-            elif 120 <= max_date_diff <= 180:
-                score += 0.5 * 50  # Half points if there's data between 120 and 180 days ago
-            else:
-                score += 0  # No points if all data is within the last 120 days
-            
-            return score
+        # Identify unique rows based on (DateTime, NavigatedToUrl, PageTitle)
+        unique_rows = df.drop_duplicates(subset=['DateTime', 'NavigatedToUrl', 'PageTitle'])
+        unique_count = len(unique_rows)
+        base_score = 50
+
+        # Scoring based on unique data count
+        if unique_count > 10000:
+            uniqueness_score = base_score  # Full points if unique data is more than 100
+        elif unique_count > 5000:
+            uniqueness_score = 0.7 * base_score  # 70% of full points for 51-100 unique entries
+        elif unique_count > 2000:
+            uniqueness_score = 0.5 * base_score  # 50% of full points for 21-50 unique entries
+        elif unique_count > 10:
+            uniqueness_score = 0.05 * base_score  # 5% of full points if unique data is 20 or less
+        else:
+            uniqueness_score = 0
         
         # Calculate the maximum DateTime difference
         max_date_diff = (df['DateTime'].max() - df['DateTime'].min()).days
         
-        # Apply the function to each row
-        df['Score'] = df.apply(calculate_row_score, axis=1, max_date_diff=max_date_diff)
+        # Scoring based on date range
+        if max_date_diff > 180:
+            date_range_score = 50  # Full points for data spanning over 180 days
+        elif 120 <= max_date_diff <= 180:
+            date_range_score = 0.5 * 50  # Half points for data spanning 120-180 days
+        else:
+            date_range_score = 0  # No points for data within 120 days
+
+        # Final score out of 100
+        total_score = int(uniqueness_score + date_range_score)/2
         
-        # Get the average score out of 50
-        average_score = int(np.mean(df['Score']))
-        
-        logging.info(f"Browser History Score: {average_score}") 
-        return average_score
+        logging.info(f"Browser History Score: {total_score}") 
+        return total_score
+
 
     # Main function to calculate scores
     def calculate_quality_score(self, input_data):
