@@ -5,6 +5,7 @@ from typing import Dict, Any
 import requests
 from jwt import encode as jwt_encode
 import pandas as pd
+import numpy as np
 from datetime import datetime, timedelta, timezone
 
 from my_proof.models.proof_response import ProofResponse
@@ -260,6 +261,51 @@ class Proof:
             return max_point * 0.1
         else:
             return 0
+    
+    # Max point 50 is used in code
+    def calculate_browser_history_score(self, csv_path):
+        # Read CSV
+        df = pd.read_csv(csv_path)
+        
+        # Convert DateTime column to datetime type
+        df['DateTime'] = pd.to_datetime(df['DateTime'])
+        
+        # Create a column for the count of occurrences of each (DateTime, NavigateToUrl, PageTitle) combination
+        df['Occurrences'] = df.groupby(['DateTime', 'NavigatedToUrl', 'PageTitle'])['DateTime'].transform('count')
+        
+        # Function to calculate the score for each row based on conditions
+        def calculate_row_score(row, max_date_diff):
+            score = 0
+            
+            # Check the occurrences of the same DateTime, NavigateToUrl, and PageTitle
+            if row['Occurrences'] >= 10:
+                score += 50  # Full points if occurrences >= 10
+            elif row['Occurrences'] >= 4:
+                score += 0.5 * 50  # 0.5% of 50 for 4-9 occurrences
+            elif row['Occurrences'] >= 1:
+                score += 0.1 * 50  # 0.1% of 50 for 1-3 occurrences
+            
+            # Check how recent the DateTime is
+            if max_date_diff > 180:
+                score += 50  # Full points if there's data more than 180 days ago
+            elif 120 <= max_date_diff <= 180:
+                score += 0.5 * 50  # Half points if there's data between 120 and 180 days ago
+            else:
+                score += 0  # No points if all data is within the last 120 days
+            
+            return score
+        
+        # Calculate the maximum DateTime difference
+        max_date_diff = (df['DateTime'].max() - df['DateTime'].min()).days
+        
+        # Apply the function to each row
+        df['Score'] = df.apply(calculate_row_score, axis=1, max_date_diff=max_date_diff)
+        
+        # Get the average score out of 50
+        average_score = int(np.mean(df['Score']))
+        
+        logging.info(f"Browser History Score: {average_score}") 
+        return average_score
 
     # Main function to calculate scores
     def calculate_quality_score(self, input_data):
@@ -304,8 +350,19 @@ class Proof:
             # Update total secured score and total max score
             total_secured_score += final_scores[task_subtype]
 
+        # Check for CSV files starting with 'BrowserHistory' in the input directory
+        csv_file = [f for f in os.listdir(self.config['input_dir']) if f.startswith("BrowserHistory") and f.endswith(".csv")]  # Use self.config['input_dir'] here
+        
+        browser_history_score = 0
+        # If there's at least one CSV file, check its length
+        if csv_file:
+            csv_path = os.path.join(self.config['input_dir'], csv_file[0])  # Use self.config['input_dir'] here
+            browser_history_score = self.calculate_browser_history_score(csv_path)
+            total_secured_score += browser_history_score
+            total_max_score += 50
 
-        total_max_score = self.calculate_max_points(points)        
+        total_max_score += self.calculate_max_points(points)   
+
         # Calculate the normalized total score
         normalized_total_score = total_secured_score / total_max_score if total_max_score > 0 else 0
 
