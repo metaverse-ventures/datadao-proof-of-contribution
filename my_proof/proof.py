@@ -277,13 +277,13 @@ class Proof:
 
         # Scoring based on unique data count
         if unique_count > 10000:
-            uniqueness_score = base_score  # Full points if unique data is more than 100
+            uniqueness_score = base_score  # Full points if unique data is more than 10000
         elif unique_count > 5000:
-            uniqueness_score = 0.7 * base_score  # 70% of full points for 51-100 unique entries
+            uniqueness_score = 0.7 * base_score  # 70% of full points for 5000-10000 unique entries
         elif unique_count > 2000:
-            uniqueness_score = 0.5 * base_score  # 50% of full points for 21-50 unique entries
+            uniqueness_score = 0.5 * base_score  # 50% of full points for 2000-5000 unique entries
         elif unique_count > 10:
-            uniqueness_score = 0.05 * base_score  # 5% of full points if unique data is 20 or less
+            uniqueness_score = 0.05 * base_score  # 5% of full points if unique data is 10 or less
         else:
             uniqueness_score = 0
         
