@@ -206,7 +206,7 @@ class Proof:
         df = pd.DataFrame(watch_data)
 
         # Convert the 'date' column to datetime
-        df['Date'] = pd.to_datetime(df['Date'], format='%Y-%m-%d')
+        df['Date'] = pd.to_datetime(df['Date'], format='%d/%m/%y')
 
         # Determine the start and end dates dynamically
         start_date = df['Date'].min()
@@ -227,8 +227,7 @@ class Proof:
         interval_scores = [self.get_watch_history_score(count, task_subtype) for count in interval_counts]
 
         # Calculate the overall score (average of interval scores)
-        overall_score = sum
-        (interval_scores) / len(interval_scores) if interval_scores else 0
+        overall_score = sum(interval_scores) / len(interval_scores) if interval_scores else 0
 
         return overall_score, interval_scores
 
