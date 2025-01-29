@@ -1,9 +1,18 @@
 import hashlib
 import json
+import os
 import redis
 
 # Connect to Redis
-redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True) #TODO: change localhost to env host
+redis_client = redis.StrictRedis(
+    host=os.environ.get('REDIS_HOST', None),
+    port=os.environ.get('REDIS_PORT', None),
+    db=0,
+    password=os.environ.get('REDIS_PWD', None),
+    decode_responses=True,
+    socket_timeout=5,
+    retry_on_timeout=True
+)
 
 def hash_secured_data(data: dict) -> str:
     """
