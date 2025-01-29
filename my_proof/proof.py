@@ -143,10 +143,10 @@ class Proof:
     def calculate_ownership_score(self, input_data: Dict[str, Any]) -> float:
         """Calculate ownership score."""
         wallet_address = input_data.get('walletAddress')
-        sub_types = input_data.get('contribution', [])
+        sub_types = input_data.get('subType', [])
         data = {
             'walletAddress': wallet_address,
-            'subType': [contribution.get('taskSubType') for contribution in sub_types]
+            'subType': sub_types
         }
         
         jwt_token = generate_jwt_token(wallet_address, self.config.get('jwt_secret_key'), self.config.get('jwt_expiration_time', 16000))
