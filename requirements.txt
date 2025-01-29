@@ -3,3 +3,4 @@ requests==2.31.0
 PyJWT==2.10.1
 pandas
 numpy
+redis
