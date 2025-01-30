@@ -4,4 +4,4 @@ PyJWT==2.10.1
 pandas
 numpy
 redis
-gnupg
+python-gnupg
