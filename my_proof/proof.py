@@ -11,7 +11,7 @@ from datetime import datetime, timedelta, timezone
 from my_proof.proof_of_authenticity import calculate_authenticity_score
 from my_proof.proof_of_ownership import calculate_ownership_score, generate_jwt_token
 from my_proof.proof_of_quality import calculate_quality_score
-from my_proof.proof_of_uniqueness import calculate_uniquness_score
+from my_proof.proof_of_uniqueness import calculate_uniqueness_score, main
 from my_proof.models.proof_response import ProofResponse
 
 # Ensure logging is configured
@@ -89,10 +89,12 @@ class Proof:
 
                 
                 # jwt_token = generate_jwt_token(data['walletAddress'])# TODO: Remove in future since generated inside calculate_ownership_score
-                # proof_response_object['ownership'] = 1.0
-                wallet_w_subTypes = self.extract_wallet_address_and_subtypes(input_data) # TODO: Uncomment
-                proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_subTypes) # TODO: Uncomment
-                proof_response_object['uniqueness'] = self.calculate_uniquness_score(input_data)
+                proof_response_object['ownership'] = 1.0
+                # wallet_w_subTypes = self.extract_wallet_address_and_subtypes(input_data) # TODO: Uncomment
+                # proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_subTypes) # TODO: Uncomment
+                input_hash_details = calculate_uniqueness_score(input_data)
+                proof_response_object['uniqueness'] = input_hash_details["avg_score"]
+                
                 proof_response_object['quality'] = self.calculate_quality_score(input_data)
                 proof_response_object['authenticity'] = self.calculate_authenticity_score(input_data)
 
@@ -155,8 +157,8 @@ class Proof:
     def calculate_quality_score(self, input_data):
         return calculate_quality_score(input_data, self.config)
     
-    def calculate_uniquness_score(self, input_data):
-        return calculate_uniquness_score(input_data)
+    # def calculate_uniquness_score(self, input_data):
+    #     return calculate_uniquness_score(input_data)
     
     def calculate_final_score(self, proof_response_object: Dict[str, Any]) -> float:
         attributes = ['authenticity', 'uniqueness', 'quality', 'ownership']

@@ -14,17 +14,17 @@ import gnupg
 def get_redis_client():
     try:
         # TODO: For local testing comment this
-        redis_client = redis.StrictRedis(
-            host=os.environ.get('REDIS_HOST', None),
-            port=os.environ.get('REDIS_PORT', None),
-            db=0,
-            password=os.environ.get('REDIS_PWD', None),
-            decode_responses=True,
-            socket_timeout=5,
-            retry_on_timeout=True
-        )
+        # redis_client = redis.StrictRedis(
+        #     host=os.environ.get('REDIS_HOST', None),
+        #     port=os.environ.get('REDIS_PORT', None),
+        #     db=0,
+        #     password=os.environ.get('REDIS_PWD', None),
+        #     decode_responses=True,
+        #     socket_timeout=5,
+        #     retry_on_timeout=True
+        # )
         # TODO: For local testing uncomment this
-        # redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True) 
+        redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True) 
         redis_client.ping()
         return redis_client
     except redis.ConnectionError:
@@ -33,6 +33,8 @@ def get_redis_client():
 def hash_value(value):
     return hashlib.sha256(value.encode()).hexdigest() if isinstance(value, str) else hash_value(json.dumps(value))
 
+# To extract taskSubType and securedSharedData from dataset shared
+# This data will be used to store in Redis cache
 def process_secured_data(contributions):
     processed = []
     for entry in contributions:
@@ -114,13 +116,20 @@ def compare_secured_data(curr_data, new_data):
         "total_normalized_score": total_normalized_score
     }
 
+
+# TODO: will be shared by Shrey
+def download_and_decrypt(file_url, temp_dir):
+    return None
+
+# TODO: call api to get {"file_id:"", "file_url":""}[]
+def get_file_details_from_wallet_address(walletAddress):
+    return None
+
 def main(curr_file_id, curr_input_data, file_list):
     redis_client = get_redis_client()
     processed_data = process_secured_data(curr_input_data.get("contribution", []))
-
-    old_hashes = set()
-    missing_files = []
     all_other_data = []
+
     if redis_client:
         for file in file_list:
             file_id = file.get("file_id")
@@ -128,34 +137,45 @@ def main(curr_file_id, curr_input_data, file_list):
             if stored_data:
                 for entry in json.loads(stored_data):
                     all_other_data.append(entry)
-            logging.info(f"all_other_data {len(all_other_data)}") 
-                    # old_hashes.update(hash_value(v) for data in entry["securedSharedData"].values() for v in (data.values() if isinstance(data, dict) else [data]))
-            # else:
-            #     missing_files.append(file)
-    # else:
-        # missing_files = file_list
-    
-    # downloaded_files = fetch_missing_files(missing_files)
-    # all_other_data = {}
-    
-    # for data in downloaded_files.values():
-    #     for entry in process_secured_data(data.get("contribution", [])):
-    #         sub_type = entry["subType"]
-    #         if sub_type not in all_other_data:
-    #             all_other_data[sub_type] = {}
-    #         all_other_data[sub_type].update(entry["securedSharedData"])
-    mean_unique = compare_secured_data(processed_data, all_other_data)["total_normalized_score"]
+            
+    else:
+        if file_list:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                for file in file_list:
+                    file_url = file.get("file_url")
+                    if file_url:
+                        decrypted_path = download_and_decrypt(file_url, temp_dir)
+                        if decrypted_path:
+                            with open(decrypted_path, "r", encoding="utf-8") as f:
+                                data = json.load(f)
+                                for entry in data:
+                                    # Process each entry using process_secured_data
+                                    processed_entry = process_secured_data(entry)
+                                    all_other_data.append(processed_entry)
     
     if redis_client:
         redis_client.set(curr_file_id, json.dumps(processed_data))
     
-    # Calculate the number of unique hashes for each subType
-    unique_hashes_count = {entry["subType"]: sum(1 for v in entry["securedSharedData"].values() if hash_value(v) not in old_hashes) for entry in processed_data}
-    
+     
+    response = compare_secured_data(processed_data, all_other_data)
+
+    # Return the processed data
     return {
-        "avg_score": mean_unique,
-        # "unique_hashes": unique_hashes_count
+        "avg_score": response["total_normalized_score"], 
+        "result": response["comparison_results"] 
     }
 
-# Example Usage
-# result = main("curr_file_123", input_json_data, [{"file_id": "old_file_456", "file_url": "http://example.com/oldfile.json"}])
+
+def calculate_uniqueness_score(curr_input_data):
+    wallet_address = curr_input_data.get('walletAddress')
+    # file_list = get_file_details_from_wallet_address(wallet_address) #TODO: add this later on
+    file_list = [
+        {"file_id": "3", "file_url":""}, 
+        {"file_id": "", "file_url":""}, 
+        {"file_id": "", "file_url":""}
+    ]
+    curr_file_id = os.environ.get('FILE_ID', "7") 
+    result = main(curr_file_id, curr_input_data, file_list)
+    return result
+
+
