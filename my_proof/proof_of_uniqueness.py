@@ -1,4 +1,5 @@
 import hashlib
+import zipfile
 import redis
 import hashlib
 import json
@@ -145,30 +146,58 @@ def download_and_decrypt(file_url, signature):
         # Define paths
         encrypted_file_path = os.path.join(download_folder, "encrypted_file.gpg")
         decrypted_file_path = os.path.join(download_folder, "decrypted.json")
-        
+        decrypted_zip_path = os.path.join(download_folder, "decrypted.zip")
+        extracted_folder = os.path.join(download_folder, "extracted")
+
         # Initialize GPG instance
         gpg = gnupg.GPG()
-        
+
         # Download the encrypted file
         download_file(file_url, encrypted_file_path)
-        
+
         # Read encrypted content
         with open(encrypted_file_path, 'rb') as encrypted_file:
             encrypted_data = encrypted_file.read()
-        
+
         # Decrypt the data
         decrypted_data = gpg.decrypt(encrypted_data, passphrase=signature)
-        
+
         if not decrypted_data.ok:
             raise Exception(f"Decryption failed: {decrypted_data.stderr}")
-        
-        # Convert decrypted data to JSON and save it
-        decrypted_json = json.loads(str(decrypted_data))
-        with open(decrypted_file_path, 'w') as decrypted_file:
-            json.dump(decrypted_json, decrypted_file, indent=2)
-        
-        print(f'Decryption successful, saved to {decrypted_file_path}')
-        return decrypted_file_path
+
+        # Save decrypted output
+        with open(decrypted_zip_path, 'wb') as decrypted_file:
+            decrypted_file.write(decrypted_data.data)
+
+        # Check if the decrypted file is a ZIP archive
+        if zipfile.is_zipfile(decrypted_zip_path):
+            os.makedirs(extracted_folder, exist_ok=True)
+
+            with zipfile.ZipFile(decrypted_zip_path, 'r') as zip_ref:
+                zip_ref.extractall(extracted_folder)
+            
+            # Find JSON file inside the extracted folder
+            json_file = None
+            for root, _, files in os.walk(extracted_folder):
+                for file in files:
+                    if file.endswith(".json"):
+                        json_file = os.path.join(root, file)
+                        break
+
+            if json_file:
+                print(f"Decryption successful, JSON extracted to {json_file}")
+                return json_file
+            else:
+                raise Exception("No JSON file found inside the decrypted ZIP")
+        else:
+            # If the decrypted output is not a ZIP, assume it's JSON
+            decrypted_json = json.loads(decrypted_data.data)
+            with open(decrypted_file_path, 'w') as json_file:
+                json.dump(decrypted_json, json_file, indent=2)
+
+            print(f"Decryption successful, saved to {decrypted_file_path}")
+            return decrypted_file_path
+
     except Exception as error:
         print(f"Error during decryption: {error}")
         raise
@@ -223,7 +252,7 @@ def uniqueness_helper(curr_input_data):
     # file_list = get_file_details_from_wallet_address(wallet_address) #TODO: add this later on
     file_list = [
         {"file_id": "3", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}, 
-        {"file_id": "4", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}, 
+        {"file_id": "4", "file_url":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
         {"file_id": "5", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}
     ]
     curr_file_id = os.environ.get('FILE_ID', "9") 
