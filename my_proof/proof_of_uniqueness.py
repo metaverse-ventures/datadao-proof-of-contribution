@@ -14,9 +14,9 @@ def get_redis_client():
         # TODO: For local testing comment this
         redis_client = redis.StrictRedis(
             host=os.environ.get('REDIS_HOST', None),
-            port=os.environ.get('REDIS_PORT', None),
+            port=os.environ.get('REDIS_PORT', 0),
             db=0,
-            password=os.environ.get('REDIS_PWD', None),
+            password=os.environ.get('REDIS_PWD', ""),
             decode_responses=True,
             socket_timeout=5,
             retry_on_timeout=True
@@ -39,9 +39,15 @@ def process_secured_data(contributions):
         sub_type = entry.get("taskSubType")
         secured_data = entry.get("securedSharedData")
         
-        hashed_data = {key: {k: hash_value(v) for k, v in value.items()} if isinstance(value, dict) else hash_value(value) 
-                       for key, value in secured_data.items()}
-        
+        hashed_data = {
+            key: (
+                {k: hash_value(v) for k, v in value.items()} if isinstance(value, dict) else
+                [hash_value(item) for item in value] if isinstance(value, list) else
+                hash_value(value)
+            )
+            for key, value in secured_data.items()
+        }
+
         processed.append({"subType": sub_type, "securedSharedData": hashed_data})
     return processed
 
@@ -80,9 +86,17 @@ def compare_secured_data(curr_data, new_data):
                 curr_value = curr_secured_data.get(key, {})
                 
                 # If the value is a dict (like "orders" or "coins"), extract values
+                # Convert dict values to sets of hashes
                 if isinstance(new_value, dict):
                     new_hashes = set(new_value.values())
                     curr_hashes = set(curr_value.values()) if isinstance(curr_value, dict) else set()
+                
+                # Convert list values to sets of hashes
+                elif isinstance(new_value, list):
+                    new_hashes = set(new_value)
+                    curr_hashes = set(curr_value) if isinstance(curr_value, list) else set()
+
+                # Single values
                 else:
                     new_hashes = {new_value}
                     curr_hashes = {curr_value} if curr_value else set()
@@ -183,23 +197,15 @@ def main(curr_file_id, curr_input_data, file_list):
                     all_other_data.append(entry)
             
     else:
-       if file_list:
-        download_folder = "./download"
-        os.makedirs(download_folder, exist_ok=True)
-        
+        cnt = 0
         for file in file_list:
             file_url = file.get("file_url")
             if file_url:
-                decrypted_path = download_and_decrypt(file_url, sign)
-                if decrypted_path:
-                    with open(decrypted_path, "r", encoding="utf-8") as f:
-                        data = json.load(f)
-                        # logging.info(f"{data["contribution"]}")
-                        contribution_array = data["contribution"]
-                        if isinstance(contribution_array, list):
-                            for entry in contribution_array:
-                                if isinstance(entry, dict):
-                                    all_other_data.append(entry)
+                decrypted_data = download_and_decrypt(file_url, sign)
+                cnt+=1
+                logging.info(f"download called {cnt}")
+                if decrypted_data and "contribution" in decrypted_data:
+                    all_other_data.extend(decrypted_data["contribution"])
     
     if redis_client:
         redis_client.set(curr_file_id, json.dumps(processed_data))
@@ -219,10 +225,10 @@ def calculate_uniqueness_score(curr_input_data):
     # file_list = get_file_details_from_wallet_address(wallet_address) #TODO: add this later on
     file_list = [
         {"file_id": "3", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}, 
-        {"file_id": "", "file_url":""}, 
-        {"file_id": "", "file_url":""}
+        {"file_id": "4", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}, 
+        {"file_id": "5", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}
     ]
-    curr_file_id = os.environ.get('FILE_ID', "7") 
+    curr_file_id = os.environ.get('FILE_ID', "9") 
     result = main(curr_file_id, curr_input_data, file_list)
     return result
 
