@@ -70,9 +70,9 @@ def get_order_history_score(orderCount, task_subtype):
     else:
         return 0
 
-def get_coins_pairs_score(coins_count, pairs_count, task_subtype):
+def get_coins_pairs_score(unique_counts, task_subtype):
     max_point = points[task_subtype]
-    total_count = coins_count + pairs_count
+    total_count = unique_counts
 
     if total_count >= 10:
         return max_point
@@ -116,12 +116,15 @@ def calculate_browser_history_score(csv_path):
     logging.info(f"Browser History Score: {total_score}")
     return total_score
 
-def calculate_quality_score(input_data, config):
+def calculate_quality_score(input_data, config, unique_entry_details):
     """Calculate quality score based on contribution data and input files."""
     final_scores = {}
     total_secured_score = 0
     total_max_score = 0
-    
+
+    # Convert unique_entry_details into a dictionary for quick lookup
+    unique_entries_dict = {entry["subType"]: entry["unique_entries"] for entry in unique_entry_details}
+
     # Loop through each contribution in the input data
     for contribution in input_data['contribution']:
         task_subtype = contribution['taskSubType']
@@ -129,21 +132,19 @@ def calculate_quality_score(input_data, config):
 
         if task_subtype == 'NETFLIX_HISTORY':
             score, _ = calculate_watch_score(securedSharedData['csv'], task_subtype)
-            final_scores[task_subtype] = score
         elif task_subtype == 'COINMARKETCAP_USER_WATCHLIST':
-            coins_count = len(securedSharedData.get('coins', {}))
-            pairs_count = len(securedSharedData.get('pairs', {}))
-            score = get_coins_pairs_score(coins_count, pairs_count, task_subtype)
-            final_scores[task_subtype] = score
+            unique_count = unique_entries_dict.get(task_subtype, 0)  # Get unique entries if available
+            score = get_coins_pairs_score(unique_count, task_subtype)  # Use unique_entries instead of coins_count
         elif task_subtype in ['AMAZON_ORDER_HISTORY', 'TRIP_USER_DETAILS']:
-            order_count = len(securedSharedData.get('orders', {}))
-            score = get_order_history_score(order_count, task_subtype)
-            final_scores[task_subtype] = score
+            unique_count = unique_entries_dict.get(task_subtype, 0)  # Get unique entries if available
+            score = get_order_history_score(unique_count, task_subtype)  # Use unique_entries instead of order_count
         elif task_subtype in ['FARCASTER_USERINFO', 'TWITTER_USERINFO', 'LINKEDIN_USER_INFO']:
             score = points[task_subtype]
-            final_scores[task_subtype] = score
+        else:
+            score = 0  # Default score for unknown subtypes
 
-        total_secured_score += final_scores[task_subtype]
+        final_scores[task_subtype] = score
+        total_secured_score += score
 
     # Check for CSV files starting with 'BrowserHistory' in the input directory
     csv_file = [f for f in os.listdir(config['input_dir']) if f.startswith("BrowserHistory") and f.endswith(".csv")]
@@ -155,7 +156,7 @@ def calculate_quality_score(input_data, config):
         total_max_score += 50
 
     total_max_score += calculate_max_points(points)
-    
+
     # Normalize the total score
     normalized_total_score = total_secured_score / total_max_score if total_max_score > 0 else 0
 

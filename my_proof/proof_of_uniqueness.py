@@ -111,6 +111,21 @@ def compare_secured_data(curr_data: list, old_data: list):
         "total_normalized_score": total_normalized_score
     }
 
+def get_unique_entries(comparison_results):
+    """
+    Extracts subType and unique entry count from comparison results.
+
+    :param comparison_results: List of dictionaries containing comparison results
+    :return: List of dictionaries with subType and unique entry count
+    """
+    return [
+        {
+            "subType": entry["subType"],
+            "unique_entry_count": entry["unique_hashes_in_curr"]
+        }
+        for entry in comparison_results
+    ]
+
 def download_file(file_url, save_path):
     response = requests.get(file_url, stream=True)
     response.raise_for_status()
@@ -203,7 +218,7 @@ def main(curr_file_id, curr_input_data, file_list):
     }
 
 # TODO: Modify for multiple file downloads
-def calculate_uniqueness_score(curr_input_data):
+def uniqueness_helper(curr_input_data):
     wallet_address = curr_input_data.get('walletAddress')
     # file_list = get_file_details_from_wallet_address(wallet_address) #TODO: add this later on
     file_list = [
@@ -212,7 +227,11 @@ def calculate_uniqueness_score(curr_input_data):
         {"file_id": "5", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}
     ]
     curr_file_id = os.environ.get('FILE_ID', "9") 
-    result = main(curr_file_id, curr_input_data, file_list)
-    return result
+    response = main(curr_file_id, curr_input_data, file_list)
+    res = {
+        "unique_entries": get_unique_entries(response.get("result")),
+        "uniqueness_score": response.get("avg_score")
+    }
+    return res
 
 

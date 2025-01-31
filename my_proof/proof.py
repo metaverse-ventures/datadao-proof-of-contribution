@@ -11,7 +11,7 @@ from datetime import datetime, timedelta, timezone
 from my_proof.proof_of_authenticity import calculate_authenticity_score
 from my_proof.proof_of_ownership import calculate_ownership_score, generate_jwt_token
 from my_proof.proof_of_quality import calculate_quality_score
-from my_proof.proof_of_uniqueness import calculate_uniqueness_score, main
+from my_proof.proof_of_uniqueness import uniqueness_helper
 from my_proof.models.proof_response import ProofResponse
 
 # Ensure logging is configured
@@ -92,10 +92,11 @@ class Proof:
                 proof_response_object['ownership'] = 1.0
                 # wallet_w_subTypes = self.extract_wallet_address_and_subtypes(input_data) # TODO: Uncomment
                 # proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_subTypes) # TODO: Uncomment
-                input_hash_details = calculate_uniqueness_score(input_data)
-                proof_response_object['uniqueness'] = input_hash_details["avg_score"]
+                input_hash_details = uniqueness_helper(input_data)
+                unique_entry_details = input_hash_details.get("unique_entries")
+                proof_response_object['uniqueness'] = input_hash_details.get("uniqueness_score")
                 
-                proof_response_object['quality'] = self.calculate_quality_score(input_data)
+                proof_response_object['quality'] = self.calculate_quality_score(input_data, unique_entry_details)
                 proof_response_object['authenticity'] = self.calculate_authenticity_score(input_data)
 
                 if proof_response_object['authenticity'] < 1.0:
@@ -154,8 +155,8 @@ class Proof:
         jwt_token = generate_jwt_token(wallet_address, self.config.get('jwt_secret_key'), self.config.get('jwt_expiration_time', 16000))
         return calculate_ownership_score(jwt_token, data, self.config.get('validator_base_api_url'))
     
-    def calculate_quality_score(self, input_data):
-        return calculate_quality_score(input_data, self.config)
+    def calculate_quality_score(self, input_data, unique_entries):
+        return calculate_quality_score(input_data, self.config, unique_entries)
     
     # def calculate_uniquness_score(self, input_data):
     #     return calculate_uniquness_score(input_data)
