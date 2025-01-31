@@ -123,7 +123,8 @@ def calculate_quality_score(input_data, config, unique_entry_details):
     total_max_score = 0
 
     # Convert unique_entry_details into a dictionary for quick lookup
-    unique_entries_dict = {entry["subType"]: entry["unique_entries"] for entry in unique_entry_details}
+    logging.info(f"unique_entry_details is {unique_entry_details}")
+    unique_entries_dict = {entry["subType"]: entry["unique_entry_count"] for entry in unique_entry_details}
 
     # Loop through each contribution in the input data
     for contribution in input_data['contribution']:

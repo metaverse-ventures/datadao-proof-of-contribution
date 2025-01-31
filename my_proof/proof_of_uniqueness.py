@@ -232,8 +232,13 @@ def main(curr_file_id, curr_input_data, file_list):
                 decrypted_data = download_and_decrypt(file_url, sign)
                 cnt+=1
                 logging.info(f"download called {cnt}")
-                if decrypted_data and "contribution" in decrypted_data:          
-                    processed_old_data.extend(process_secured_data(decrypted_data["contribution"]))
+                # Load data from the JSON file
+                json_file_path = decrypted_data
+                with open(json_file_path, 'r') as json_file:
+                    downloaded_data = json.load(json_file)
+                # process and generate key values with respective hash values
+                logging.info(f"downloaded_data is {downloaded_data.get("contribution")}")
+                processed_old_data += process_secured_data(downloaded_data.get("contribution"))
     
     if redis_client:
         redis_client.set(curr_file_id, json.dumps(processed_curr_data))
