@@ -59,7 +59,6 @@ def compare_secured_data(processed_curr_data: list, processed_old_data: list):
 
     # Convert processed_curr_data to a dictionary for easier lookup
     curr_dict = {item["subType"]: item["securedSharedData"] for item in processed_curr_data}
-    
     # Iterate through processed_old_data subTypes
     logging.info(f"Processed old data {processed_old_data}")
     for new_item in processed_old_data:
@@ -234,7 +233,7 @@ def main(curr_file_id, curr_input_data, file_list):
                 logging.info(f"download called {cnt}")
                 # Load data from the JSON file
                 json_file_path = decrypted_data
-                with open(json_file_path, 'r') as json_file:
+                with open(json_file_path, 'r', encoding="utf-8") as json_file:
                     downloaded_data = json.load(json_file)
                 # process and generate key values with respective hash values
                 logging.info(f"downloaded_data is {downloaded_data.get("contribution")}")
@@ -259,7 +258,8 @@ def uniqueness_helper(curr_input_data):
     file_list = [
         {"file_id": "3", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}, 
         {"file_id": "4", "file_url":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
-        {"file_id": "5", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}
+        {"file_id": "5", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"},
+        {"file_id": "11", "file_url":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
     ]
     curr_file_id = os.environ.get('FILE_ID', "9") 
     response = main(curr_file_id, curr_input_data, file_list)
