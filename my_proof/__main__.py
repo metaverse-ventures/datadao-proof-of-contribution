@@ -26,6 +26,7 @@ def load_config() -> Dict[str, Any]:
         'validator_base_api_url': os.environ.get('VALIDATOR_BASE_API_URL', None),
         'jwt_secret_key': os.environ.get('JWT_SECRET_KEY'),
         'file_id': os.environ.get('FILE_ID'),
+        'signature': os.environ.get('SIGNATURE'),
         'redis_port': os.environ.get('REDIS_PORT', None),
         'redis_host': os.environ.get('REDIS_HOST', None),
         'redis_pwd': os.environ.get('REDIS_PWD', None),
