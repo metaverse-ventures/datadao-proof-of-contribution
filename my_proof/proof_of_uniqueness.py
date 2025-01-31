@@ -52,15 +52,15 @@ def process_secured_data(contributions):
     return processed
 
 
-def compare_secured_data(curr_data: list, old_data: list):
+def compare_secured_data(processed_curr_data: list, processed_old_data: list):
     result = []
     total_score = 0  # To calculate total normalized score
 
-    # Convert curr_data to a dictionary for easier lookup
-    curr_dict = {item["subType"]: item["securedSharedData"] for item in curr_data}
+    # Convert processed_curr_data to a dictionary for easier lookup
+    curr_dict = {item["subType"]: item["securedSharedData"] for item in processed_curr_data}
     
-    # Iterate through old_data subTypes
-    for new_item in old_data:
+    # Iterate through processed_old_data subTypes
+    for new_item in processed_old_data:
         sub_type = new_item.get("subType")
         new_secured_data = new_item.get("securedSharedData")
         
