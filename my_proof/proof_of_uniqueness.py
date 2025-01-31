@@ -31,8 +31,8 @@ def get_redis_client():
 def hash_value(value):
     return hashlib.sha256(value.encode()).hexdigest() if isinstance(value, str) else hash_value(json.dumps(value))
 
-# To extract taskSubType and securedSharedData from dataset shared
-# This data will be used to store in Redis cache
+# To extract taskSubType and securedSharedData from the contribution field of dataset shared
+# This data will be used for hashing as well as caching in Redis
 def process_secured_data(contributions):
     processed = []
     for entry in contributions:
@@ -51,28 +51,16 @@ def process_secured_data(contributions):
         processed.append({"subType": sub_type, "securedSharedData": hashed_data})
     return processed
 
-def fetch_missing_files(files):
-    downloaded_data = {}
-    for file in files:
-        file_id = file.get("file_id")
-        file_url = file.get("file_url")
-        try:
-            response = requests.get(file_url)
-            if response.status_code == 200:
-                downloaded_data[file_id] = json.loads(response.text)
-        except Exception as e:
-            print(f"Failed to download {file_url}: {e}")
-    return downloaded_data
 
-def compare_secured_data(curr_data, new_data):
+def compare_secured_data(curr_data: list, old_data: list):
     result = []
     total_score = 0  # To calculate total normalized score
-    
+
     # Convert curr_data to a dictionary for easier lookup
     curr_dict = {item["subType"]: item["securedSharedData"] for item in curr_data}
     
-    # Iterate through new_data subTypes
-    for new_item in new_data:
+    # Iterate through old_data subTypes
+    for new_item in old_data:
         sub_type = new_item.get("subType")
         new_secured_data = new_item.get("securedSharedData")
         
@@ -95,11 +83,6 @@ def compare_secured_data(curr_data, new_data):
                 elif isinstance(new_value, list):
                     new_hashes = set(new_value)
                     curr_hashes = set(curr_value) if isinstance(curr_value, list) else set()
-
-                # Single values
-                else:
-                    new_hashes = {new_value}
-                    curr_hashes = {curr_value} if curr_value else set()
                 
                 unique_hashes.update(curr_hashes - new_hashes)
                 total_hashes.update(curr_hashes)
@@ -185,8 +168,8 @@ def main(curr_file_id, curr_input_data, file_list):
     sign = "0x1195b3bd9821ff98e91a9ea92913cdfc1b2be36a72a8dfb7c220b5bf79e177a87547a3b2340bf1cbb73e48cc7b964be028348b55a0f4cd974eec4d4a5c06d5df1c"
     # file_url = "https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"
     # download_and_decrypt(file_url, sign)
-    processed_data = process_secured_data(curr_input_data.get("contribution", []))
-    all_other_data = []
+    processed_curr_data = process_secured_data(curr_input_data.get("contribution", []))
+    processed_old_data = []
 
     if redis_client:
         for file in file_list:
@@ -194,7 +177,7 @@ def main(curr_file_id, curr_input_data, file_list):
             stored_data = redis_client.get(file_id)
             if stored_data:
                 for entry in json.loads(stored_data):
-                    all_other_data.append(entry)
+                    processed_old_data.append(entry)
             
     else:
         cnt = 0
@@ -205,13 +188,13 @@ def main(curr_file_id, curr_input_data, file_list):
                 cnt+=1
                 logging.info(f"download called {cnt}")
                 if decrypted_data and "contribution" in decrypted_data:
-                    all_other_data.extend(decrypted_data["contribution"])
+                    processed_old_data.extend(decrypted_data["contribution"])
     
     if redis_client:
-        redis_client.set(curr_file_id, json.dumps(processed_data))
+        redis_client.set(curr_file_id, json.dumps(processed_curr_data))
     
      
-    response = compare_secured_data(processed_data, all_other_data)
+    response = compare_secured_data(processed_curr_data, processed_old_data)
 
     # Return the processed data
     return {
