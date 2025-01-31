@@ -61,6 +61,7 @@ def compare_secured_data(processed_curr_data: list, processed_old_data: list):
     curr_dict = {item["subType"]: item["securedSharedData"] for item in processed_curr_data}
     
     # Iterate through processed_old_data subTypes
+    logging.info(f"Processed old data {processed_old_data}")
     for new_item in processed_old_data:
         sub_type = new_item.get("subType")
         new_secured_data = new_item.get("securedSharedData")
@@ -231,8 +232,8 @@ def main(curr_file_id, curr_input_data, file_list):
                 decrypted_data = download_and_decrypt(file_url, sign)
                 cnt+=1
                 logging.info(f"download called {cnt}")
-                if decrypted_data and "contribution" in decrypted_data:
-                    processed_old_data.extend(decrypted_data["contribution"])
+                if decrypted_data and "contribution" in decrypted_data:          
+                    processed_old_data.extend(process_secured_data(decrypted_data["contribution"]))
     
     if redis_client:
         redis_client.set(curr_file_id, json.dumps(processed_curr_data))
