@@ -135,18 +135,18 @@ def calculate_quality_score(input_data, config, unique_entry_details):
     for contribution in input_data['contribution']:
         task_subtype = contribution['taskSubType']
         securedSharedData = contribution['securedSharedData']
+        subtype_unique_count = unique_entries_dict.get(task_subtype)["unique_entry_count"] # Get unique entries if available
+        subtype_uniqueness_score = unique_entries_dict.get(task_subtype)["subtype_unique_score"] 
 
         if task_subtype == 'NETFLIX_HISTORY':
-            score, _ = calculate_watch_score(securedSharedData['csv'], task_subtype)
+           
+            score = get_watch_history_score(subtype_unique_count, task_subtype)
         elif task_subtype == 'COINMARKETCAP_USER_WATCHLIST':
-            unique_count = unique_entries_dict.get(task_subtype)["unique_entry_count"] # Get unique entries if available
-            score = get_coins_pairs_score(unique_count, task_subtype)  # Use unique_entries instead of coins_count
+            score = get_coins_pairs_score(subtype_unique_count, task_subtype)  # Use unique_entries instead of coins_count
         elif task_subtype in ['AMAZON_ORDER_HISTORY', 'TRIP_USER_DETAILS']:
-            unique_count = unique_entries_dict.get(task_subtype)["unique_entry_count"]  # Get unique entries if available
-            score = get_order_history_score(unique_count, task_subtype)  # Use unique_entries instead of order_count
+            score = get_order_history_score(subtype_unique_count, task_subtype)  # Use unique_entries instead of order_count
         elif task_subtype in ['FARCASTER_USERINFO', 'TWITTER_USERINFO', 'LINKEDIN_USER_INFO']:
-            uniqueness_score = unique_entries_dict.get(task_subtype)["subtype_unique_score"]
-            score = points[task_subtype] * uniqueness_score
+            score = points[task_subtype] * subtype_uniqueness_score
         else:
             score = 0  # Default score for unknown subtypes
 
