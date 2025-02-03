@@ -59,53 +59,88 @@ def compare_secured_data(processed_curr_data: list, processed_old_data: list):
 
     # Convert processed_curr_data to a dictionary for easier lookup
     curr_dict = {item["subType"]: item["securedSharedData"] for item in processed_curr_data}
-    # Iterate through processed_old_data subTypes
-    logging.info(f"Processed old data {processed_old_data}")
-    for new_item in processed_old_data:
-        sub_type = new_item.get("subType")
-        new_secured_data = new_item.get("securedSharedData")
-        
-        if sub_type in curr_dict:
-            curr_secured_data = curr_dict[sub_type]
-            unique_hashes = set()
+    old_dict = {item["subType"]: item["securedSharedData"] for item in processed_old_data}
+    
+    # Handle case where processed_old_data is empty
+    if not processed_old_data:
+        for sub_type, secured_data in curr_dict.items():
             total_hashes = set()
             
+            for key, value in secured_data.items():
+                if isinstance(value, dict):
+                    total_hashes.update(value.values())
+                elif isinstance(value, list):
+                    total_hashes.update(value)
+            
+            result.append({
+                "subType": sub_type,
+                "unique_hashes_in_curr": len(total_hashes),
+                "total_hashes_in_curr": len(total_hashes),
+                "subtype_unique_score": 1.0
+            })
+            total_score += 1.0
+
+        return {
+            "comparison_results": result,
+            "total_normalized_score": 1.0
+        }
+    
+    # Iterate through processed_old_data subTypes
+    logging.info(f"Processed old data {processed_old_data}")
+    all_sub_types = set(curr_dict.keys()).union(set(old_dict.keys()))
+    
+    for sub_type in all_sub_types:
+        curr_secured_data = curr_dict.get(sub_type, {})
+        old_secured_data = old_dict.get(sub_type, {})
+        unique_hashes = set()
+        total_hashes = set()
+        
+        # If subType is only in curr_dict, consider all hashes unique
+        if sub_type not in old_dict:
+            for key, value in curr_secured_data.items():
+                if isinstance(value, dict):
+                    unique_hashes.update(value.values())
+                    total_hashes.update(value.values())
+                elif isinstance(value, list):
+                    unique_hashes.update(value)
+                    total_hashes.update(value)
+            subtype_unique_score = 1.0
+        else:
             # Compare fields inside securedSharedData
-            for key, new_value in new_secured_data.items():
+            for key, old_value in old_secured_data.items():
                 curr_value = curr_secured_data.get(key, {})
                 
-                # If the value is a dict (like "orders" or "coins"), extract values
                 # Convert dict values to sets of hashes
-                if isinstance(new_value, dict):
-                    new_hashes = set(new_value.values())
+                if isinstance(old_value, dict):
+                    old_hashes = set(old_value.values())
                     curr_hashes = set(curr_value.values()) if isinstance(curr_value, dict) else set()
                 
                 # Convert list values to sets of hashes
-                elif isinstance(new_value, list):
-                    new_hashes = set(new_value)
+                elif isinstance(old_value, list):
+                    old_hashes = set(old_value)
                     curr_hashes = set(curr_value) if isinstance(curr_value, list) else set()
                 
-                unique_hashes.update(curr_hashes - new_hashes)
+                unique_hashes.update(curr_hashes - old_hashes)
                 total_hashes.update(curr_hashes)
             
             # Calculate subtype unique score (avoid division by zero)
             subtype_unique_score = (len(unique_hashes) / len(total_hashes)) if total_hashes else 0
-            total_score += subtype_unique_score  # Sum up scores
-            
-            # Add results
-            result.append({
-                "subType": sub_type,
-                "unique_hashes_in_curr": len(unique_hashes),
-                "total_hashes_in_curr": len(total_hashes),
-                "subtype_unique_score": subtype_unique_score
-            })
+        
+        total_score += subtype_unique_score  # Sum up scores
+        
+        # Add results
+        logging.info(f"sub_type: {sub_type}, unique_hashes_in_curr: {len(unique_hashes)}")
+        result.append({
+            "subType": sub_type,
+            "unique_hashes_in_curr": len(unique_hashes),
+            "total_hashes_in_curr": len(total_hashes),
+            "subtype_unique_score": subtype_unique_score
+        })
 
     # Calculate total normalized score
     total_normalized_score = total_score / len(result) if result else 0
 
-    logging.info(f" result, normalised score{
-        total_normalized_score
-    }")
+    logging.info(f"Result, normalized score: {total_normalized_score}")
     
     return {
         "comparison_results": result,
@@ -259,8 +294,8 @@ def uniqueness_helper(curr_input_data):
     file_list = [
         {"file_id": "3", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}, 
         {"file_id": "4", "file_url":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
-        {"file_id": "5", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"},
-        {"file_id": "11", "file_url":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
+        # {"file_id": "5", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"},
+        # {"file_id": "11", "file_url":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
     ]
     curr_file_id = os.environ.get('FILE_ID', "9") 
     response = main(curr_file_id, curr_input_data, file_list)
