@@ -124,8 +124,13 @@ def calculate_quality_score(input_data, config, unique_entry_details):
 
     # Convert unique_entry_details into a dictionary for quick lookup
     logging.info(f"unique_entry_details is {unique_entry_details}")
-    unique_entries_dict = {entry["subType"]: entry["unique_entry_count"] for entry in unique_entry_details}
-
+    unique_entries_dict = {
+    entry["subType"]: {
+        "unique_entry_count": entry["unique_entry_count"], 
+        "subtype_unique_score": entry["subtype_unique_score"]
+    }
+        for entry in unique_entry_details
+    }
     # Loop through each contribution in the input data
     for contribution in input_data['contribution']:
         task_subtype = contribution['taskSubType']
@@ -134,13 +139,14 @@ def calculate_quality_score(input_data, config, unique_entry_details):
         if task_subtype == 'NETFLIX_HISTORY':
             score, _ = calculate_watch_score(securedSharedData['csv'], task_subtype)
         elif task_subtype == 'COINMARKETCAP_USER_WATCHLIST':
-            unique_count = unique_entries_dict.get(task_subtype, 0)  # Get unique entries if available
+            unique_count = unique_entries_dict.get(task_subtype)["unique_entry_count"] # Get unique entries if available
             score = get_coins_pairs_score(unique_count, task_subtype)  # Use unique_entries instead of coins_count
         elif task_subtype in ['AMAZON_ORDER_HISTORY', 'TRIP_USER_DETAILS']:
-            unique_count = unique_entries_dict.get(task_subtype, 0)  # Get unique entries if available
+            unique_count = unique_entries_dict.get(task_subtype)["unique_entry_count"]  # Get unique entries if available
             score = get_order_history_score(unique_count, task_subtype)  # Use unique_entries instead of order_count
         elif task_subtype in ['FARCASTER_USERINFO', 'TWITTER_USERINFO', 'LINKEDIN_USER_INFO']:
-            score = points[task_subtype]
+            uniqueness_score = unique_entries_dict.get(task_subtype)["subtype_unique_score"]
+            score = points[task_subtype] * uniqueness_score
         else:
             score = 0  # Default score for unknown subtypes
 

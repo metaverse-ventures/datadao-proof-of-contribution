@@ -122,7 +122,8 @@ def get_unique_entries(comparison_results):
     return [
         {
             "subType": entry["subType"],
-            "unique_entry_count": entry["unique_hashes_in_curr"]
+            "unique_entry_count": entry["unique_hashes_in_curr"],
+            "subtype_unique_score": entry["subtype_unique_score"]
         }
         for entry in comparison_results
     ]
