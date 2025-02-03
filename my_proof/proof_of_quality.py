@@ -139,7 +139,7 @@ def calculate_quality_score(input_data, config, unique_entry_details):
         subtype_uniqueness_score = unique_entries_dict.get(task_subtype)["subtype_unique_score"] 
 
         if task_subtype == 'NETFLIX_HISTORY':
-           
+           # score, _ = calculate_watch_score(securedSharedData['csv'], task_subtype)
             score = get_watch_history_score(subtype_unique_count, task_subtype)
         elif task_subtype == 'COINMARKETCAP_USER_WATCHLIST':
             score = get_coins_pairs_score(subtype_unique_count, task_subtype)  # Use unique_entries instead of coins_count
