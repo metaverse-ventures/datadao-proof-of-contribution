@@ -4,7 +4,7 @@ def calculate_authenticity_score(contributions: List[Dict[str, any]], valid_doma
     """Calculate authenticity score by verifying contribution witnesses against valid domains."""
     valid_count = sum(
         1 for contribution in contributions
-        if contribution.get('witnesses', '').endswith(tuple(valid_domains))
+        if any(contribution.get('witnesses', '').startswith(domain) for domain in valid_domains)
     )
 
     return valid_count / len(contributions) if contributions else 0
