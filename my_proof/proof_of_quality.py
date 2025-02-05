@@ -20,63 +20,63 @@ points = {
 def calculate_max_points(points_dict):
     return sum(points_dict.values())
 
-# Scoring thresholds
-def get_watch_history_score(count, task_type):
+# # Scoring thresholds
+# def get_watch_history_score(count, task_type):
+#     max_point = points[task_type]
+#     if count >= 10:
+#         return max_point
+#     elif 4 <= count <= 9:
+#         return max_point * 0.5
+#     elif 1 <= count <= 3:
+#         return max_point * 0.1
+#     else:
+#         return 0
+
+# def calculate_watch_score(watch_data, task_type):
+#     df = pd.DataFrame(watch_data)
+#     df['Date'] = pd.to_datetime(df['Date'], format='%d/%m/%y')
+
+#     start_date = df['Date'].min()
+#     end_date = df['Date'].max()
+
+#     intervals = pd.date_range(start=start_date, end=end_date, freq='15D')
+#     interval_counts = []
+#     for i in range(len(intervals) - 1):
+#         interval_start = intervals[i]
+#         interval_end = intervals[i + 1]
+#         count = df[(df['Date'] >= interval_start) & (df['Date'] < interval_end)].shape[0]
+#         interval_counts.append(count)
+
+#     interval_scores = [get_watch_history_score(count, task_type) for count in interval_counts]
+
+#     overall_score = sum(interval_scores) / len(interval_scores) if interval_scores else 0
+
+#     return overall_score, interval_scores
+
+def get_dynamic_task_score(uniqueness_count, task_type):
     max_point = points[task_type]
-    if count >= 10:
+
+    if uniqueness_count >= 10:
         return max_point
-    elif 4 <= count <= 9:
+    elif 5 <= uniqueness_count <= 9:
         return max_point * 0.5
-    elif 1 <= count <= 3:
+    elif 1 <= uniqueness_count <= 4:
         return max_point * 0.1
     else:
         return 0
 
-def calculate_watch_score(watch_data, task_type):
-    df = pd.DataFrame(watch_data)
-    df['Date'] = pd.to_datetime(df['Date'], format='%d/%m/%y')
+# def get_coins_pairs_score(unique_counts, task_type):
+#     max_point = points[task_type]
+#     total_count = unique_counts
 
-    start_date = df['Date'].min()
-    end_date = df['Date'].max()
-
-    intervals = pd.date_range(start=start_date, end=end_date, freq='15D')
-    interval_counts = []
-    for i in range(len(intervals) - 1):
-        interval_start = intervals[i]
-        interval_end = intervals[i + 1]
-        count = df[(df['Date'] >= interval_start) & (df['Date'] < interval_end)].shape[0]
-        interval_counts.append(count)
-
-    interval_scores = [get_watch_history_score(count, task_type) for count in interval_counts]
-
-    overall_score = sum(interval_scores) / len(interval_scores) if interval_scores else 0
-
-    return overall_score, interval_scores
-
-def get_order_history_score(orderCount, task_type):
-    max_point = points[task_type]
-
-    if orderCount >= 10:
-        return max_point
-    elif 5 <= orderCount <= 9:
-        return max_point * 0.5
-    elif 1 <= orderCount <= 4:
-        return max_point * 0.1
-    else:
-        return 0
-
-def get_coins_pairs_score(unique_counts, task_type):
-    max_point = points[task_type]
-    total_count = unique_counts
-
-    if total_count >= 10:
-        return max_point
-    elif 4 <= total_count <= 9:
-        return max_point * 0.5
-    elif 1 <= total_count <= 3:
-        return max_point * 0.1
-    else:
-        return 0
+#     if total_count >= 10:
+#         return max_point
+#     elif 4 <= total_count <= 9:
+#         return max_point * 0.5
+#     elif 1 <= total_count <= 3:
+#         return max_point * 0.1
+#     else:
+#         return 0
 
 def calculate_browser_history_score(csv_path):
     df = pd.read_csv(csv_path)
@@ -133,13 +133,8 @@ def calculate_quality_score(input_data, config, unique_entry_details):
         type_unique_count = unique_entries_dict.get(task_type)["unique_entry_count"] # Get unique entries if available
         type_uniqueness_score = unique_entries_dict.get(task_type)["type_unique_score"] 
 
-        # if task_type == 'NETFLIX_HISTORY':
-        #    # score, _ = calculate_watch_score(securedSharedData['csv'], task_type)
-        #     score = get_watch_history_score(type_unique_count, task_type)
-        # elif task_type == 'COINMARKETCAP_USER_WATCHLIST':
-        #     score = get_coins_pairs_score(type_unique_count, task_type)  # Use unique_entries instead of coins_count
         if task_type in ['UBER', 'AMAZON_PRIME', 'ZOMATO', 'SPOTIFY', 'NETFLIX']:
-            score = get_order_history_score(type_unique_count, task_type)  # Use unique_entries instead of order_count
+            score = get_dynamic_task_score(type_unique_count, task_type)  # Use unique_entries instead of order_count
         elif task_type in ['REDDIT', 'STEAM', 'TWITCH',' TWITTER', 'LINKEDIN']:
             score = points[task_type] * type_uniqueness_score
         else:
