@@ -89,9 +89,9 @@ class Proof:
 
                 
                 # jwt_token = generate_jwt_token(data['walletAddress'])# TODO: Remove in future since generated inside calculate_ownership_score
-                # proof_response_object['ownership'] = 1.0
-                wallet_w_subTypes = self.extract_wallet_address_and_subtypes(input_data) # TODO: Uncomment
-                proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_subTypes) # TODO: Uncomment
+                proof_response_object['ownership'] = 1.0
+                # wallet_w_subTypes = self.extract_wallet_address_and_subtypes(input_data) # TODO: Uncomment
+                # proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_subTypes) # TODO: Uncomment
                 input_hash_details = uniqueness_helper(input_data)
                 unique_entry_details = input_hash_details.get("unique_entries")
                 proof_response_object['uniqueness'] = input_hash_details.get("uniqueness_score")
@@ -163,13 +163,14 @@ class Proof:
     
     def calculate_final_score(self, proof_response_object: Dict[str, Any]) -> float:
         attributes = ['authenticity', 'uniqueness', 'quality', 'ownership']
+        weights = {
+            'authenticity': 0.05,  # Low weight for authenticity
+            'ownership': 0.07,  # Slightly higher than authenticity
+            'quality': 0.31,  # Moderate weight for quality
+            'uniqueness': 0.50  # High weight for uniqueness
+        }
 
-        valid_attributes = [
-            proof_response_object.get(attr, 0) for attr in attributes
-            if proof_response_object.get(attr) is not None
-        ]
+        for attr in attributes:
+            weighted_sum += proof_response_object.get(attr, 0) * weights[attr]
 
-        if not valid_attributes:
-            return 0
-
-        return sum(valid_attributes) / len(valid_attributes)
+        return weighted_sum
