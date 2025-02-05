@@ -18,7 +18,6 @@ def generate_jwt_token(wallet_address: str, secret_key: str, expiration_time: in
     token = jwt_encode(payload, secret_key, algorithm='HS256')
     return token
 
-
 def calculate_ownership_score(jwt_token: str, data: dict, validator_url: str) -> float:
     """Calculate ownership score by verifying data against an external API."""
     if not jwt_token or not isinstance(jwt_token, str):
