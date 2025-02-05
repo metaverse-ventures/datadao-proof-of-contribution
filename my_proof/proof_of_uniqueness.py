@@ -14,13 +14,10 @@ def get_redis_client():
     try:
         # TODO: For local testing comment this
         redis_client = redis.StrictRedis(
-            host="roundhouse.proxy.rlwy.net",
-            # os.environ.get('REDIS_HOST', None),
-            port=28665,
-            # os.environ.get('REDIS_PORT', 0),
+            host= os.environ.get('REDIS_HOST', None),
+            port= os.environ.get('REDIS_PORT', 0),
             db=0,
-            password="pqWlAtdaRRdWdjVkEsDpSYEnyxDPKWHJ",
-            # os.environ.get('REDIS_PWD', ""),
+            password= os.environ.get('REDIS_PWD', ""),
             decode_responses=True,
             socket_timeout=30,
             retry_on_timeout=True
@@ -291,14 +288,14 @@ def main(curr_file_id, curr_input_data, file_list):
 # TODO: Modify for multiple file downloads
 def uniqueness_helper(curr_input_data):
     wallet_address = curr_input_data.get('walletAddress')
-    # file_list = get_file_details_from_wallet_address(wallet_address) #TODO: add this later on
-    file_list = [
-        {"fileId": 3, "fileUrl":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}, 
-        # {"fileId": 4, "fileUrl":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
-        # {"fileId": 5, "fileUrl":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"},
-        # {"fileId": 11, "fileUrl":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
-    ]
-    curr_file_id = os.environ.get('FILE_ID',4) 
+    file_list = get_file_details_from_wallet_address(wallet_address) #TODO: add this later on
+    # file_list = [
+    #     {"fileId": 4, "fileUrl":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}, 
+    #     # {"fileId": 4, "fileUrl":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
+    #     # {"fileId": 5, "fileUrl":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"},
+    #     # {"fileId": 11, "fileUrl":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
+    # ]
+    curr_file_id = os.environ.get('FILE_ID') 
     response = main(curr_file_id, curr_input_data, file_list)
     res = {
         "unique_entries": get_unique_entries(response.get("result")),
