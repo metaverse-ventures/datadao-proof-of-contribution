@@ -5,21 +5,16 @@ import logging
 from typing import Dict, Any
 
 points = {
-    'YOUTUBE_SUBSCRIBERS': 50,
-    'YOUTUBE_CHANNEL_DATA': 50,
-    'YOUTUBE_CREATOR_PLAYLIST': 50,
-    'YOUTUBE_STUDIO': 50,
-    'AMAZON_PRIME_VIDEO': 50,
-    'AMAZON_ORDER_HISTORY': 50,
-    'SPOTIFY_PLAYLIST': 50,
-    'SPOTIFY_HISTORY': 50,
-    'NETFLIX_HISTORY': 50,
-    'NETFLIX_FAVORITE': 50,
-    'TWITTER_USERINFO': 50,
-    'FARCASTER_USERINFO': 50,
-    'COINMARKETCAP_USER_WATCHLIST': 50,
-    'LINKEDIN_USER_INFO': 50,
-    'TRIP_USER_DETAILS': 50
+    "REDDIT":50,
+    "STEAM":50,
+    "UBER":50,
+    "LINKEDIN":50,
+    "TWITCH":50,
+    "AMAZON_PRIME":50,
+    "NETFLIX":50,
+    "ZOMATO":50,
+    "SPOTIFY":50,
+    "TWITTER":50,
 }
 
 def calculate_max_points(points_dict):
@@ -138,14 +133,14 @@ def calculate_quality_score(input_data, config, unique_entry_details):
         type_unique_count = unique_entries_dict.get(task_type)["unique_entry_count"] # Get unique entries if available
         type_uniqueness_score = unique_entries_dict.get(task_type)["type_unique_score"] 
 
-        if task_type == 'NETFLIX_HISTORY':
-           # score, _ = calculate_watch_score(securedSharedData['csv'], task_type)
-            score = get_watch_history_score(type_unique_count, task_type)
-        elif task_type == 'COINMARKETCAP_USER_WATCHLIST':
-            score = get_coins_pairs_score(type_unique_count, task_type)  # Use unique_entries instead of coins_count
-        elif task_type in ['AMAZON_ORDER_HISTORY', 'TRIP_USER_DETAILS']:
+        # if task_type == 'NETFLIX_HISTORY':
+        #    # score, _ = calculate_watch_score(securedSharedData['csv'], task_type)
+        #     score = get_watch_history_score(type_unique_count, task_type)
+        # elif task_type == 'COINMARKETCAP_USER_WATCHLIST':
+        #     score = get_coins_pairs_score(type_unique_count, task_type)  # Use unique_entries instead of coins_count
+        if task_type in ['UBER', 'AMAZON_PRIME', 'ZOMATO', 'SPOTIFY', 'NETFLIX']:
             score = get_order_history_score(type_unique_count, task_type)  # Use unique_entries instead of order_count
-        elif task_type in ['FARCASTER_USERINFO', 'TWITTER_USERINFO', 'LINKEDIN_USER_INFO']:
+        elif task_type in ['REDDIT', 'STEAM', 'TWITCH',' TWITTER', 'LINKEDIN']:
             score = points[task_type] * type_uniqueness_score
         else:
             score = 0  # Default score for unknown types
