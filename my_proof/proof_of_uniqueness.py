@@ -60,7 +60,7 @@ def compare_secured_data(processed_curr_data: list, processed_old_data: list):
     # Convert processed_curr_data to a dictionary for easier lookup
     curr_dict = {item["subType"]: item["securedSharedData"] for item in processed_curr_data}
     old_dict = {item["subType"]: item["securedSharedData"] for item in processed_old_data}
-    
+    logging.info(f"curr_dict {curr_dict},old_dict {old_dict} ")
     # Handle case where processed_old_data is empty
     if not processed_old_data:
         for sub_type, secured_data in curr_dict.items():
@@ -86,7 +86,7 @@ def compare_secured_data(processed_curr_data: list, processed_old_data: list):
         }
     
     # Iterate through processed_old_data subTypes
-    logging.info(f"Processed old data {processed_old_data}")
+    logging.info(f"Processed old data {processed_old_data}, Processed curr data {processed_curr_data}")
     all_sub_types = set(curr_dict.keys()).union(set(old_dict.keys()))
     
     for sub_type in all_sub_types:
@@ -240,20 +240,26 @@ def download_and_decrypt(file_url, signature):
 
 
 # TODO: call api to get {"file_id:"", "file_url":""}[]
-def get_file_details_from_wallet_address(walletAddress):
-    return None
+def get_file_details_from_wallet_address(wallet_address):
+    validator_base_api_url = os.environ.get('VALIDATOR_BASE_API_URL')
+    endpoint = "/api/userinfo"
+    url = f"{validator_base_api_url.rstrip('/')}{endpoint}?walletAddress={wallet_address}"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return response.json()  # Return JSON
+    else:
+        return []  # Return empty [] in case of an error
 
 def main(curr_file_id, curr_input_data, file_list):
     redis_client = get_redis_client()
-    sign = "0x1195b3bd9821ff98e91a9ea92913cdfc1b2be36a72a8dfb7c220b5bf79e177a87547a3b2340bf1cbb73e48cc7b964be028348b55a0f4cd974eec4d4a5c06d5df1c"
-    # file_url = "https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"
-    # download_and_decrypt(file_url, sign)
+    # sign = "0x1195b3bd9821ff98e91a9ea92913cdfc1b2be36a72a8dfb7c220b5bf79e177a87547a3b2340bf1cbb73e48cc7b964be028348b55a0f4cd974eec4d4a5c06d5df1c"
     processed_curr_data = process_secured_data(curr_input_data.get("contribution", []))
     processed_old_data = []
 
     if redis_client:
         for file in file_list:
-            file_id = file.get("file_id")
+            file_id = file.get("fileId")
             stored_data = redis_client.get(file_id)
             if stored_data:
                 for entry in json.loads(stored_data):
@@ -261,8 +267,10 @@ def main(curr_file_id, curr_input_data, file_list):
             
     else:
         cnt = 0
+        sign = os.environ.get("SIGNATURE")
+
         for file in file_list:
-            file_url = file.get("file_url")
+            file_url = file.get("fileUrl")
             if file_url:
                 decrypted_data = download_and_decrypt(file_url, sign)
                 cnt+=1
@@ -290,14 +298,14 @@ def main(curr_file_id, curr_input_data, file_list):
 # TODO: Modify for multiple file downloads
 def uniqueness_helper(curr_input_data):
     wallet_address = curr_input_data.get('walletAddress')
-    # file_list = get_file_details_from_wallet_address(wallet_address) #TODO: add this later on
-    file_list = [
-        {"file_id": "3", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}, 
-        {"file_id": "4", "file_url":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
-        # {"file_id": "5", "file_url":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"},
-        # {"file_id": "11", "file_url":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
-    ]
-    curr_file_id = os.environ.get('FILE_ID', "9") 
+    file_list = get_file_details_from_wallet_address(wallet_address) #TODO: add this later on
+    # file_list = [
+    #     {"fileId": 3, "fileUrl":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}, 
+    #     {"fileId": 4, "fileUrl":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
+    #     {"fileId": 5, "fileUrl":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"},
+    #     {"fileId": 11, "fileUrl":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
+    # ]
+    curr_file_id = os.environ.get('FILE_ID') 
     response = main(curr_file_id, curr_input_data, file_list)
     res = {
         "unique_entries": get_unique_entries(response.get("result")),

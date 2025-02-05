@@ -31,7 +31,10 @@ def calculate_ownership_score(jwt_token: str, data: dict, validator_url: str) ->
             'Authorization': f'Bearer {jwt_token}',  # Attach JWT token in the Authorization header
         }
 
-        response = requests.post(validator_url, json=data, headers=headers)
+        endpoint = "/api/datavalidation"
+        url = f"{validator_url.rstrip('/')}{endpoint}"
+
+        response = requests.post(url, json=data, headers=headers)
 
         response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
 
