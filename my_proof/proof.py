@@ -89,9 +89,9 @@ class Proof:
 
                 
                 # jwt_token = generate_jwt_token(data['walletAddress'])# TODO: Remove in future since generated inside calculate_ownership_score
-                proof_response_object['ownership'] = 1.0
-                # wallet_w_subTypes = self.extract_wallet_address_and_subtypes(input_data) # TODO: Uncomment
-                # proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_subTypes) # TODO: Uncomment
+                # proof_response_object['ownership'] = 1.0
+                wallet_w_subTypes = self.extract_wallet_address_and_subtypes(input_data) # TODO: Uncomment
+                proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_subTypes) # TODO: Uncomment
                 input_hash_details = uniqueness_helper(input_data)
                 unique_entry_details = input_hash_details.get("unique_entries")
                 proof_response_object['uniqueness'] = input_hash_details.get("uniqueness_score")
