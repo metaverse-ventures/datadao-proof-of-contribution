@@ -19,7 +19,7 @@ def get_redis_client():
             db=0,
             password=os.environ.get('REDIS_PWD', ""),
             decode_responses=True,
-            socket_timeout=5,
+            socket_timeout=30,
             retry_on_timeout=True
         )
         # TODO: For local testing uncomment this
@@ -254,16 +254,28 @@ def get_file_details_from_wallet_address(wallet_address):
 def main(curr_file_id, curr_input_data, file_list):
     redis_client = get_redis_client()
     # sign = "0x1195b3bd9821ff98e91a9ea92913cdfc1b2be36a72a8dfb7c220b5bf79e177a87547a3b2340bf1cbb73e48cc7b964be028348b55a0f4cd974eec4d4a5c06d5df1c"
+
     processed_curr_data = process_secured_data(curr_input_data.get("contribution", []))
     processed_old_data = []
 
+    # if redis_client:
+    #     for file in file_list:
+    #         file_id = file.get("fileId")
+    #         stored_data = redis_client.get(file_id)
+    #         if stored_data:
+    #             for entry in json.loads(stored_data):
+    #                 processed_old_data.append(entry)
     if redis_client:
+        pipeline = redis_client.pipeline()
         for file in file_list:
-            file_id = file.get("fileId")
-            stored_data = redis_client.get(file_id)
+            pipeline.get(file.get("fileId"))
+        stored_data_list = pipeline.execute()
+        
+        for stored_data in stored_data_list:
             if stored_data:
-                for entry in json.loads(stored_data):
-                    processed_old_data.append(entry)
+                processed_old_data.extend(json.loads(stored_data))
+
+        logging.info(f"Redis data {processed_old_data}") 
             
     else:
         cnt = 0
