@@ -231,52 +231,49 @@ def get_file_details_from_wallet_address(wallet_address):
 
 def main(curr_file_id, curr_input_data, file_list):
     redis_client = get_redis_client()
-    # sign = "0x1195b3bd9821ff98e91a9ea92913cdfc1b2be36a72a8dfb7c220b5bf79e177a87547a3b2340bf1cbb73e48cc7b964be028348b55a0f4cd974eec4d4a5c06d5df1c"
-
     processed_curr_data = process_secured_data(curr_input_data.get("contribution", []))
     processed_old_data = []
-
-    # if redis_client:
-    #     for file in file_list:
-    #         file_id = file.get("fileId")
-    #         stored_data = redis_client.get(file_id)
-    #         if stored_data:
-    #             for entry in json.loads(stored_data):
-    #                 processed_old_data.append(entry)
+    sign = os.environ.get("SIGNATURE")
     if redis_client:
         pipeline = redis_client.pipeline()
         for file in file_list:
             pipeline.get(file.get("fileId"))
         stored_data_list = pipeline.execute()
-        
-        for stored_data in stored_data_list:
+
+        for idx, stored_data in enumerate(stored_data_list):
             if stored_data:
+                # If the data exists in Redis, process it
                 processed_old_data.extend(json.loads(stored_data))
+            else:
+                # If data is not found in Redis, download and process the file
+                file_url = file_list[idx].get("fileUrl")
+                if file_url:
+                    decrypted_data = download_and_decrypt(file_url, sign)
+                    logging.info(f"Download called for fileId: {file_list[idx].get('fileId')}")
+                    # Load data from the downloaded JSON file
+                    with open(decrypted_data, 'r', encoding="utf-8") as json_file:
+                        downloaded_data = json.load(json_file)
+                    # Process and append the new data
+                    processed_old_data += process_secured_data(downloaded_data.get("contribution"))
+        logging.info(f"Processed Redis data: {processed_old_data}")
 
-        logging.info(f"Redis data {processed_old_data}") 
-            
     else:
-        cnt = 0
-        sign = os.environ.get("SIGNATURE")
-
+        # If no Redis client is available, download files from the list
         for file in file_list:
             file_url = file.get("fileUrl")
             if file_url:
                 decrypted_data = download_and_decrypt(file_url, sign)
-                cnt+=1
-                logging.info(f"download called {cnt}")
-                # Load data from the JSON file
-                json_file_path = decrypted_data
-                with open(json_file_path, 'r', encoding="utf-8") as json_file:
+                logging.info(f"Download called for file: {file_url}")
+                # Load data from the decrypted JSON file
+                with open(decrypted_data, 'r', encoding="utf-8") as json_file:
                     downloaded_data = json.load(json_file)
-                # process and generate key values with respective hash values
-                logging.info(f"downloaded_data is {downloaded_data.get("contribution")}")
                 processed_old_data += process_secured_data(downloaded_data.get("contribution"))
-    
+
+    # Store current data in Redis if available
     if redis_client:
         redis_client.set(curr_file_id, json.dumps(processed_curr_data))
-    
-     
+
+    # Compare current and old data
     response = compare_secured_data(processed_curr_data, processed_old_data)
 
     # Return the processed data
