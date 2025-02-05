@@ -90,8 +90,8 @@ class Proof:
                 
                 # jwt_token = generate_jwt_token(data['walletAddress'])# TODO: Remove in future since generated inside calculate_ownership_score
                 # proof_response_object['ownership'] = 1.0
-                wallet_w_subTypes = self.extract_wallet_address_and_subtypes(input_data) # TODO: Uncomment
-                proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_subTypes) # TODO: Uncomment
+                wallet_w_Types = self.extract_wallet_address_and_types(input_data) # TODO: Uncomment
+                proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_Types) # TODO: Uncomment
                 input_hash_details = uniqueness_helper(input_data)
                 unique_entry_details = input_hash_details.get("unique_entries")
                 proof_response_object['uniqueness'] = input_hash_details.get("uniqueness_score")
@@ -129,10 +129,10 @@ class Proof:
         token = jwt_encode(payload, secret_key, algorithm='HS256')
         return token
 
-    def extract_wallet_address_and_subtypes(self, input_data):
+    def extract_wallet_address_and_types(self, input_data):
         wallet_address = input_data.get('walletAddress')
-        subType = [contribution.get('taskSubType') for contribution in input_data.get('contribution', [])]
-        return  {'walletAddress': wallet_address, 'subType': subType}
+        types = [contribution.get('type') for contribution in input_data.get('contribution', [])]
+        return  {'walletAddress': wallet_address, 'types': types}
     
     def calculate_max_points(self, points_dict):
         return sum(points_dict.values())
@@ -146,10 +146,10 @@ class Proof:
     def calculate_ownership_score(self, input_data: Dict[str, Any]) -> float:
         """Calculate ownership score."""
         wallet_address = input_data.get('walletAddress')
-        sub_types = input_data.get('subType', [])
+        types = input_data.get('types', [])
         data = {
             'walletAddress': wallet_address,
-            'subType': sub_types
+            'types': types
         }
         
         jwt_token = generate_jwt_token(wallet_address, self.config.get('jwt_secret_key'), self.config.get('jwt_expiration_time', 16000))

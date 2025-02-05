@@ -32,12 +32,12 @@ def get_redis_client():
 def hash_value(value):
     return hashlib.sha256(value.encode()).hexdigest() if isinstance(value, str) else hash_value(json.dumps(value))
 
-# To extract taskSubType and securedSharedData from the contribution field of dataset shared
+# To extract type and securedSharedData from the contribution field of dataset shared
 # This data will be used for hashing as well as caching in Redis
 def process_secured_data(contributions):
     processed = []
     for entry in contributions:
-        sub_type = entry.get("taskSubType")
+        type = entry.get("type")
         secured_data = entry.get("securedSharedData")
         
         hashed_data = {
@@ -49,7 +49,7 @@ def process_secured_data(contributions):
             for key, value in secured_data.items()
         }
 
-        processed.append({"subType": sub_type, "securedSharedData": hashed_data})
+        processed.append({"type": type, "securedSharedData": hashed_data})
     return processed
 
 
@@ -58,20 +58,20 @@ def compare_secured_data(processed_curr_data: list, processed_old_data: list):
     total_score = 0  # To calculate total normalized score
 
     # Convert processed_curr_data to a dictionary for easier lookup
-    curr_dict = {item["subType"]: item["securedSharedData"] for item in processed_curr_data}
-    old_dict = {item["subType"]: item["securedSharedData"] for item in processed_old_data}
+    curr_dict = {item["type"]: item["securedSharedData"] for item in processed_curr_data}
+    old_dict = {item["type"]: item["securedSharedData"] for item in processed_old_data}
     logging.info(f"curr_dict {curr_dict}, old_dict {old_dict}")
 
-    # Process all subtypes from curr_dict
-    for sub_type, curr_secured_data in curr_dict.items():
+    # Process all types from curr_dict
+    for type, curr_secured_data in curr_dict.items():
         unique_hashes = set()
         total_hashes = set()
-        old_secured_data = old_dict.get(sub_type, {})  # Get old data if available
+        old_secured_data = old_dict.get(type, {})  # Get old data if available
 
-        logging.info(f"Processing sub_type: {sub_type}, curr_secured_data: {curr_secured_data}")
+        logging.info(f"Processing types: {type}, curr_secured_data: {curr_secured_data}")
 
-        # If subType is not in old_dict, consider all hashes unique
-        if sub_type not in old_dict:
+        # If type is not in old_dict, consider all hashes unique
+        if type not in old_dict:
             for key, value in curr_secured_data.items():
                 if isinstance(value, dict):
                     unique_hashes.update(value.values())
@@ -79,7 +79,7 @@ def compare_secured_data(processed_curr_data: list, processed_old_data: list):
                 elif isinstance(value, list):
                     unique_hashes.update(value)
                     total_hashes.update(value)
-            subtype_unique_score = 1.0  # Fully unique
+            type_unique_score = 1.0  # Fully unique
         else:
             # Compare fields inside securedSharedData
             for key, old_value in old_secured_data.items():
@@ -103,17 +103,17 @@ def compare_secured_data(processed_curr_data: list, processed_old_data: list):
                 unique_hashes.update(curr_hashes - old_hashes)
                 total_hashes.update(curr_hashes)
 
-            # Calculate subtype unique score (avoid division by zero)
-            subtype_unique_score = (len(unique_hashes) / len(total_hashes)) if total_hashes else 0
+            # Calculate type unique score (avoid division by zero)
+            type_unique_score = (len(unique_hashes) / len(total_hashes)) if total_hashes else 0
 
-        total_score += subtype_unique_score  # Sum up scores
+        total_score += type_unique_score  # Sum up scores
 
         # Add results
         result.append({
-            "subType": sub_type,
+            "type": type,
             "unique_hashes_in_curr": len(unique_hashes),
             "total_hashes_in_curr": len(total_hashes),
-            "subtype_unique_score": subtype_unique_score
+            "type_unique_score": type_unique_score
         })
 
     # Calculate total normalized score
@@ -127,16 +127,16 @@ def compare_secured_data(processed_curr_data: list, processed_old_data: list):
 
 def get_unique_entries(comparison_results):
     """
-    Extracts subType and unique entry count from comparison results.
+    Extracts type and unique entry count from comparison results.
 
     :param comparison_results: List of dictionaries containing comparison results
-    :return: List of dictionaries with subType and unique entry count
+    :return: List of dictionaries with type and unique entry count
     """
     return [
         {
-            "subType": entry["subType"],
+            "type": entry["type"],
             "unique_entry_count": entry["unique_hashes_in_curr"],
-            "subtype_unique_score": entry["subtype_unique_score"]
+            "type_unique_score": entry["type_unique_score"]
         }
         for entry in comparison_results
     ]
