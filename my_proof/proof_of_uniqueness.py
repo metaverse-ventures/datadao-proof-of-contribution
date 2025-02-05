@@ -79,6 +79,9 @@ def compare_secured_data(processed_curr_data: list, processed_old_data: list):
                 elif isinstance(value, list):
                     unique_hashes.update(value)
                     total_hashes.update(value)
+                elif isinstance(value, str):
+                    unique_hashes.add(str(value))
+                    total_hashes.add(str(value))
             type_unique_score = 1.0  # Fully unique
         else:
             # Compare fields inside securedSharedData
