@@ -42,8 +42,6 @@ class Proof:
                     input_data = json.load(f)
 
                 logging.info(f"Processing file: {input_filename}")
-
-                
                
                 # proof_response_object['ownership'] = 1.0
                 wallet_w_types = self.extract_wallet_address_and_types(input_data) # TODO: Uncomment
