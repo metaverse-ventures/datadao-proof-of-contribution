@@ -221,7 +221,7 @@ def download_and_decrypt(file_url, signature):
             return decrypted_file_path
 
     except Exception as error:
-        print(f"Error during decryption: {error}")
+        logging.warning(f"Error during decryption: {error}")
         return None
 
 
