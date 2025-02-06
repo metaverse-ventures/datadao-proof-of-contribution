@@ -259,6 +259,7 @@ def main(curr_file_id, curr_input_data, file_list):
             if stored_data:
                 # If the data exists in Redis, process it
                 processed_old_data.extend(json.loads(stored_data))
+                
             else:
                 # If data is not found in Redis, download and process the file
                 file_url = file_list[idx].get("fileUrl")
@@ -273,6 +274,7 @@ def main(curr_file_id, curr_input_data, file_list):
                         downloaded_data = json.load(json_file)
                     # Process and append the new data
                     processed_old_data += process_secured_data(downloaded_data.get("contribution"))
+
         logging.info(f"Processed Redis data: {processed_old_data}")
 
     else:
