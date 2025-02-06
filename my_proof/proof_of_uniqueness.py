@@ -22,8 +22,7 @@ def get_redis_client():
             socket_timeout=30,
             retry_on_timeout=True
         )
-        # TODO: For local testing uncomment this
-        # redis_client = redis.StrictRedis(host='localhost', port=6379, db=0, decode_responses=True) 
+
         redis_client.ping()
         return redis_client
     except redis.ConnectionError:
@@ -76,12 +75,15 @@ def compare_secured_data(processed_curr_data: list, processed_old_data: list):
                 if isinstance(value, dict):
                     unique_hashes.update(value.values())
                     total_hashes.update(value.values())
+
                 elif isinstance(value, list):
                     unique_hashes.update(value)
                     total_hashes.update(value)
+
                 elif isinstance(value, str):
                     unique_hashes.add(str(value))
                     total_hashes.add(str(value))
+
             type_unique_score = 1.0  # Fully unique
         else:
             # Compare fields inside securedSharedData
@@ -220,7 +222,6 @@ def download_and_decrypt(file_url, signature):
         raise
 
 
-# TODO: call api to get {"file_id:"", "file_url":""}[]
 def get_file_details_from_wallet_address(wallet_address):
     validator_base_api_url = os.environ.get('VALIDATOR_BASE_API_URL')
     endpoint = "/api/userinfo"

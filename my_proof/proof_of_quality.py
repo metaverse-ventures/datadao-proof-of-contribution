@@ -20,39 +20,6 @@ points = {
 def calculate_max_points(points_dict):
     return sum(points_dict.values())
 
-# # Scoring thresholds
-# def get_watch_history_score(count, task_type):
-#     max_point = points[task_type]
-#     if count >= 10:
-#         return max_point
-#     elif 4 <= count <= 9:
-#         return max_point * 0.5
-#     elif 1 <= count <= 3:
-#         return max_point * 0.1
-#     else:
-#         return 0
-
-# def calculate_watch_score(watch_data, task_type):
-#     df = pd.DataFrame(watch_data)
-#     df['Date'] = pd.to_datetime(df['Date'], format='%d/%m/%y')
-
-#     start_date = df['Date'].min()
-#     end_date = df['Date'].max()
-
-#     intervals = pd.date_range(start=start_date, end=end_date, freq='15D')
-#     interval_counts = []
-#     for i in range(len(intervals) - 1):
-#         interval_start = intervals[i]
-#         interval_end = intervals[i + 1]
-#         count = df[(df['Date'] >= interval_start) & (df['Date'] < interval_end)].shape[0]
-#         interval_counts.append(count)
-
-#     interval_scores = [get_watch_history_score(count, task_type) for count in interval_counts]
-
-#     overall_score = sum(interval_scores) / len(interval_scores) if interval_scores else 0
-
-#     return overall_score, interval_scores
-
 def get_dynamic_task_score(uniqueness_count, task_type):
     max_point = points[task_type]
 
@@ -64,19 +31,6 @@ def get_dynamic_task_score(uniqueness_count, task_type):
         return max_point * 0.1
     else:
         return 0
-
-# def get_coins_pairs_score(unique_counts, task_type):
-#     max_point = points[task_type]
-#     total_count = unique_counts
-
-#     if total_count >= 10:
-#         return max_point
-#     elif 4 <= total_count <= 9:
-#         return max_point * 0.5
-#     elif 1 <= total_count <= 3:
-#         return max_point * 0.1
-#     else:
-#         return 0
 
 def calculate_browser_history_score(csv_path):
     df = pd.read_csv(csv_path)
