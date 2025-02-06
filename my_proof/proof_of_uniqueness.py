@@ -147,14 +147,19 @@ def get_unique_entries(comparison_results):
     ]
 
 def download_file(file_url, save_path):
-    response = requests.get(file_url, stream=True)
-    response.raise_for_status()
-    
-    with open(save_path, 'wb') as file:
-        for chunk in response.iter_content(chunk_size=8192):
-            file.write(chunk)
-    
-    return save_path
+    try:
+        response = requests.get(file_url, stream=True)
+        response.raise_for_status()  # This will raise an exception for HTTP errors (400, 404, etc.)
+        
+        with open(save_path, 'wb') as file:
+            for chunk in response.iter_content(chunk_size=8192):
+                file.write(chunk)
+
+        return save_path  # File downloaded successfully
+
+    except requests.exceptions.HTTPError as e:
+        logging.error(f"Failed to download {file_url}: {e}")
+        return None  # Return None to indicate failure
 
 def download_and_decrypt(file_url, signature):
     try:
@@ -172,7 +177,9 @@ def download_and_decrypt(file_url, signature):
         gpg = gnupg.GPG()
 
         # Download the encrypted file
-        download_file(file_url, encrypted_file_path)
+        result = download_file(file_url, encrypted_file_path)
+        if not result:  # Skip if download failed
+            return None  
 
         # Read encrypted content
         with open(encrypted_file_path, 'rb') as encrypted_file:
@@ -252,17 +259,22 @@ def main(curr_file_id, curr_input_data, file_list):
             if stored_data:
                 # If the data exists in Redis, process it
                 processed_old_data.extend(json.loads(stored_data))
-            # else:
-            #     # If data is not found in Redis, download and process the file
-            #     file_url = file_list[idx].get("fileUrl")
-            #     if file_url:
-            #         decrypted_data = download_and_decrypt(file_url, sign)
-            #         logging.info(f"Download called for fileId: {file_list[idx].get('fileId')}")
-            #         # Load data from the downloaded JSON file
-            #         with open(decrypted_data, 'r', encoding="utf-8") as json_file:
-            #             downloaded_data = json.load(json_file)
-            #         # Process and append the new data
-            #         processed_old_data += process_secured_data(downloaded_data.get("contribution"))
+                
+            else:
+                # If data is not found in Redis, download and process the file
+                file_url = file_list[idx].get("fileUrl")
+                if file_url:
+                    decrypted_data = download_and_decrypt(file_url, sign)
+                    if not decrypted_data:  # Skip if download failed
+                        logging.warning(f"Skipping file {file_url} due to download error.")
+                        continue  # Move to the next file
+                    logging.info(f"Download called for fileId: {file_list[idx].get('fileId')}")
+                    # Load data from the downloaded JSON file
+                    with open(decrypted_data, 'r', encoding="utf-8") as json_file:
+                        downloaded_data = json.load(json_file)
+                    # Process and append the new data
+                    processed_old_data += process_secured_data(downloaded_data.get("contribution"))
+
         logging.info(f"Processed Redis data: {processed_old_data}")
 
     else:
@@ -271,6 +283,9 @@ def main(curr_file_id, curr_input_data, file_list):
             file_url = file.get("fileUrl")
             if file_url:
                 decrypted_data = download_and_decrypt(file_url, sign)
+                if not decrypted_data:  # Skip if download failed
+                        logging.warning(f"Skipping file {file_url} due to download error.")
+                        continue  # Move to the next file
                 logging.info(f"Download called for file: {file_url}")
                 # Load data from the decrypted JSON file
                 with open(decrypted_data, 'r', encoding="utf-8") as json_file:
