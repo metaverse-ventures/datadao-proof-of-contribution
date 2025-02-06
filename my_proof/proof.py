@@ -49,7 +49,6 @@ class Proof:
                 input_hash_details = uniqueness_helper(input_data)
                 unique_entry_details = input_hash_details.get("unique_entries")
                 proof_response_object['uniqueness'] = input_hash_details.get("uniqueness_score")
-                
                 proof_response_object['quality'] = self.calculate_quality_score(input_data, unique_entry_details)
                 proof_response_object['authenticity'] = self.calculate_authenticity_score(input_data)
 
