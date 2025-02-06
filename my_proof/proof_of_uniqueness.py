@@ -222,7 +222,7 @@ def download_and_decrypt(file_url, signature):
 
     except Exception as error:
         print(f"Error during decryption: {error}")
-        raise
+        return None
 
 
 def get_file_details_from_wallet_address(wallet_address):
