@@ -252,17 +252,17 @@ def main(curr_file_id, curr_input_data, file_list):
             if stored_data:
                 # If the data exists in Redis, process it
                 processed_old_data.extend(json.loads(stored_data))
-            else:
-                # If data is not found in Redis, download and process the file
-                file_url = file_list[idx].get("fileUrl")
-                if file_url:
-                    decrypted_data = download_and_decrypt(file_url, sign)
-                    logging.info(f"Download called for fileId: {file_list[idx].get('fileId')}")
-                    # Load data from the downloaded JSON file
-                    with open(decrypted_data, 'r', encoding="utf-8") as json_file:
-                        downloaded_data = json.load(json_file)
-                    # Process and append the new data
-                    processed_old_data += process_secured_data(downloaded_data.get("contribution"))
+            # else:
+            #     # If data is not found in Redis, download and process the file
+            #     file_url = file_list[idx].get("fileUrl")
+            #     if file_url:
+            #         decrypted_data = download_and_decrypt(file_url, sign)
+            #         logging.info(f"Download called for fileId: {file_list[idx].get('fileId')}")
+            #         # Load data from the downloaded JSON file
+            #         with open(decrypted_data, 'r', encoding="utf-8") as json_file:
+            #             downloaded_data = json.load(json_file)
+            #         # Process and append the new data
+            #         processed_old_data += process_secured_data(downloaded_data.get("contribution"))
         logging.info(f"Processed Redis data: {processed_old_data}")
 
     else:
