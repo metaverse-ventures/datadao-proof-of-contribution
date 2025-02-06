@@ -225,13 +225,17 @@ def download_and_decrypt(file_url, signature):
 def get_file_details_from_wallet_address(wallet_address):
     validator_base_api_url = os.environ.get('VALIDATOR_BASE_API_URL')
     endpoint = "/api/userinfo"
-    url = f"{validator_base_api_url.rstrip('/')}{endpoint}?walletAddress={wallet_address}"
-    response = requests.get(url)
+    url = f"{validator_base_api_url.rstrip('/')}{endpoint}"
+
+    payload = {"walletAddress": wallet_address}  # Send walletAddress in the body
+    headers = {"Content-Type": "application/json"}  # Set headers for JSON request
+
+    response = requests.post(url, json=payload, headers=headers)  # Make POST request
 
     if response.status_code == 200:
-        return response.json()  # Return JSON
+        return response.json()  # Return JSON response
     else:
-        return []  # Return empty [] in case of an error
+        return []  # Return empty list in case of an error
 
 def main(curr_file_id, curr_input_data, file_list):
     redis_client = get_redis_client()
