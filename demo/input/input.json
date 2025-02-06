@@ -1,49 +1,11 @@
 {
-    "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28F5",
+    "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
     "claimDate": "2025-01-07T07:57:30.883Z",
     "contribution": [
         {
-            "type": "AMAZON",
-            "taskSubType": "AMAZON_ORDER_HISTORY",
-            "claimedDate": "2025-01-07T07:02:48.887Z",
-            "witnesses": "wss://witness.reclaimprotocol.org/ws",
-            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28F5",
-            "AccoundUsername": "Kalpesh",
-            "securedSharedData": {
-                "orders": {
-                    "0": "boAt Airdopes 121 Pro Plus Truly Wireless in Ear Ear Buds w/ 100 HRS Playtime, 4 Mics w/ENx™, 50ms Low-Latency Beast™ Mode, ASAP™ Charge, IWP™ Tech, BT v5.3 & IPX5 Ear Buds TWS (Black)",
-                    "1": "YADIFEN Premium Soft Silicone Back Scrubber Shower Bath Body Brush with Long Handle | BPA-Free | For Men and Women",
-                    "2": "BienesMart Luffy Gear 5 Laughing One Piece Printed Design Anime iPhone Back Case|Strong Tempered Glass Back Cover|Camera & Edge Protection|Wireless Charging (13)",
-                    "3": "FOVERA Memory Foam Coccyx Seat Cushion for Tailbone Pain | 2 Years Warranty | Sciatica, Back Pain Relief - Orthopedic Chair Cushions for Sitting for Office Chair (L-Above 80kg Wt, Mesh Black)",
-                    "4": "HOKIPO Folding Laundry Basket for Clothes, Round Collapsible Storage Basket - Large 43 LTR (AR2540)(Cotton, Black)",
-                    "5": "Gita Press हनुमानबाहुक (Hanuman Bahuk) By Shri Shyam"
-                },
-                "orderCount": 6
-            }
-        },
-        {
-            "type": "FARCASTER",
-            "taskSubType": "FARCASTER_USERINFO",
-            "claimedDate": "2025-01-07T07:01:45.078Z",
-            "witnesses": "wss://witness.reclaimprotocol.org/ws",
-            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
-            "AccoundUsername": "avinashnayak",
-            "securedSharedData": {
-                "FID": "265504",
-                "URL_PARAMS_GRD": "avinashnayak",
-                "displayName": "Avinash ",
-                "followerCount": "100",
-                "followingCount": "91",
-                "profilePictureUrl": "https://imagedelivery.net/BXluQx4ige9GuW0Ia56BHw/43722eb1-e27c-466a-5247-6b4825b1cf00/original",
-                "userBio": "Web3 developer with Ethereum expertise exploring zk",
-                "userName": "avinashnayak"
-            }
-        },
-        {
             "type": "TWITTER",
-            "taskSubType": "TWITTER_USERINFO",
             "claimedDate": "2025-01-07T07:04:15.421Z",
-            "witnesses": "wss://witness.doom.org/ws",
+            "witnesses": "wss://witness.reclaim.org/ws/ws0xtrtedgfjiu",
             "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
             "AccoundUsername": "username",
             "securedSharedData": {
@@ -55,604 +17,491 @@
             }
         },
         {
-            "type": "TRIP",
-            "taskSubType": "TRIP_USER_DETAILS",
-            "claimedDate": "2025-01-07T07:04:15.421Z",
-            "witnesses": "wss://witness.doom.org/ws",
-            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
-            "securedSharedData": {
-                "orders": {
-                    "0": {
-                        "OrderId": 36455945817,
-                        "OrderName": "Bangkok-Phuket|Phuket-Bangkok(Return)",
-                        "BizType": "FlightInternational",
-                        "ContactName": "KARTIKEYA RAI",
-                        "BookingDate": "/Date(1731526288000+0800)/"
-                    }
-                }
-            }
-        },
-        {
-            "type": "COINMARKETCAP",
-            "taskSubType": "COINMARKETCAP_USER_WATCHLIST",
-            "claimedDate": "2025-01-07T07:04:15.421Z",
-            "witnesses": "wss://witness.doom.org/ws",
-            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
-            "securedSharedData": {
-                "coins": {
-                    "0": "Bitcoin BTC",
-                    "1": "Ethereum ETH",
-                    "2": "Tether USDT",
-                    "3": "XRP XRP",
-                    "4": "USDC USDC",
-                    "5": "Uniswap UNI",
-                    "6": "Internet Computer ICP"
-                },
-                "pairs": {
-                    "0": "shigga/SOL the black sheep",
-                    "1": "SHIBAI/SOL Shiba Inu AI",
-                    "2": "WULFY/SOL WULFY"
-                }
-            }
-        },
-        {
             "type": "LINKEDIN",
-            "taskSubType": "LINKEDIN_USER_INFO",
-            "claimedDate": "2025-01-07T07:04:15.421Z",
-            "witnesses": "wss://witness.doom.org/ws",
-            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
-            "securedSharedData": {
-                "experience": [
-                    {
-                        "company": "Tech Corp",
-                        "position": "Software Engineer",
-                        "startDate": "2020-01-01",
-                        "endDate": "2022-01-01"
-                    }
-                ],
-                "about": "Experienced software engineer with a passion for developing innovative programs.",
-                "profile": "https://www.linkedin.com/in/john_doe",
-                "education": [
-                    {
-                        "institution": "University of Technology",
-                        "degree": "Bachelor of Science in Computer Science",
-                        "startDate": "2015-01-01",
-                        "endDate": "2019-01-01"
-                    }
-                ],
-                "skills": [
-                    "JavaScript",
-                    "Python",
-                    "React",
-                    "Node.js"
-                ],
-                "name": "John Doe",
-                "linkedinHandle": "john_doe",
-                "connectionCount": 500,
-                "followersCount": 1000
-            }
-        },
-        {
-            "type": "NETFLIX",
-            "taskSubType": "NETFLIX_HISTORY",
             "claimedDate": "2025-01-07T07:04:15.421Z",
             "witnesses": "wss://witness.doom.org/ws",
             "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
             "AccoundUsername": "username",
             "securedSharedData": {
-                "codeName": "S-Icarus-6.Abracadabra",
-                "csv": [
-                    {
-                        "Title": "Gangs of Godavari",
-                        "Date": "26/12/24"
-                    },
-                    {
-                        "Title": "Squid Game: Season 2: Friend or Foe",
-                        "Date": "26/12/24"
-                    },
-                    {
-                        "Title": "Squid Game: Season 2: O ﻿ X",
-                        "Date": "26/12/24"
-                    },
-                    {
-                        "Title": "Squid Game: Season 2: One More Game",
-                        "Date": "26/12/24"
-                    },
-                    {
-                        "Title": "Squid Game: Season 2: Six Legs",
-                        "Date": "26/12/24"
-                    },
-                    {
-                        "Title": "Squid Game: Season 2: 001",
-                        "Date": "26/12/24"
-                    },
-                    {
-                        "Title": "Squid Game: Season 2: Halloween Party",
-                        "Date": "26/12/24"
-                    },
-                    {
-                        "Title": "Squid Game: Season 2: Bread and Lottery",
-                        "Date": "26/12/24"
-                    },
-                    {
-                        "Title": "Squid Game: Season 1: Red Light, Green Light",
-                        "Date": "26/12/24"
-                    },
-                    {
-                        "Title": "Salaar",
-                        "Date": "23/12/24"
-                    },
-                    {
-                        "Title": "Animal",
-                        "Date": "19/12/24"
-                    },
-                    {
-                        "Title": "Jodhaa Akbar",
-                        "Date": "17/12/24"
-                    },
-                    {
-                        "Title": "Eega",
-                        "Date": "14/12/24"
-                    },
-                    {
-                        "Title": "Mad",
-                        "Date": "14/12/24"
-                    },
-                    {
-                        "Title": "Don",
-                        "Date": "12/12/24"
-                    },
-                    {
-                        "Title": "Mathu Vadalara 2",
-                        "Date": "11/12/24"
-                    },
-                    {
-                        "Title": "Irugapatru",
-                        "Date": "11/12/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 2: Stories",
-                        "Date": "09/12/24"
-                    },
-                    {
-                        "Title": "Lucky Baskhar",
-                        "Date": "09/12/24"
-                    },
-                    {
-                        "Title": "Amaran",
-                        "Date": "09/12/24"
-                    },
-                    {
-                        "Title": "Waltair Veerayya",
-                        "Date": "03/12/24"
-                    },
-                    {
-                        "Title": "Bagheera",
-                        "Date": "03/12/24"
-                    },
-                    {
-                        "Title": "Chhota Bheem and the Curse of Damyaan",
-                        "Date": "02/12/24"
-                    },
-                    {
-                        "Title": "Krishna Vrinda Vihari",
-                        "Date": "02/12/24"
-                    },
-                    {
-                        "Title": "Suits: Season 3: Yesterday’s Gone",
-                        "Date": "02/12/24"
-                    },
-                    {
-                        "Title": "Happy New Year",
-                        "Date": "29/11/24"
-                    },
-                    {
-                        "Title": "Bujjigadu Made In Chennai",
-                        "Date": "28/11/24"
-                    },
-                    {
-                        "Title": "Ae Dil Hai Mushkil",
-                        "Date": "27/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 3: Buried Secrets",
-                        "Date": "26/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 3: Stay",
-                        "Date": "26/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 3: Bad Faith",
-                        "Date": "26/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 3: Endgame",
-                        "Date": "26/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 3: She's Mine",
-                        "Date": "25/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 3: The Other Time",
-                        "Date": "25/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 3: Shadow of a Doubt",
-                        "Date": "24/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 3: Conflict of Interest",
-                        "Date": "24/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 3: Unfinished Business",
-                        "Date": "24/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 3: I Want You to Want Me",
-                        "Date": "23/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 3: The Arrangement",
-                        "Date": "23/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: War",
-                        "Date": "23/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: Normandy",
-                        "Date": "22/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: He's Back",
-                        "Date": "22/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: Zane Vs. Zane",
-                        "Date": "22/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: Blood in the Water",
-                        "Date": "22/11/24"
-                    },
-                    {
-                        "Title": "Bheeshma",
-                        "Date": "22/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: Blind-Sided",
-                        "Date": "21/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: High Noon",
-                        "Date": "21/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: Asterisk",
-                        "Date": "21/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: Rewind",
-                        "Date": "21/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: Sucker Punch",
-                        "Date": "21/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: All In",
-                        "Date": "21/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: Break Point",
-                        "Date": "21/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: Discovery",
-                        "Date": "21/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: Meet the New Boss",
-                        "Date": "20/11/24"
-                    },
-                    {
-                        "Title": "Spider-Man: No Way Home",
-                        "Date": "20/11/24"
-                    },
-                    {
-                        "Title": "Ben 10: Season 1: Washington B.C",
-                        "Date": "20/11/24"
-                    },
-                    {
-                        "Title": "Do Patti",
-                        "Date": "20/11/24"
-                    },
-                    {
-                        "Title": "Tegimpu",
-                        "Date": "19/11/24"
-                    },
-                    {
-                        "Title": "Thunivu",
-                        "Date": "19/11/24"
-                    },
-                    {
-                        "Title": "Devara",
-                        "Date": "11/11/24"
-                    },
-                    {
-                        "Title": "Scream 2",
-                        "Date": "10/11/24"
-                    },
-                    {
-                        "Title": "Scream",
-                        "Date": "09/11/24"
-                    },
-                    {
-                        "Title": "Tillu Square",
-                        "Date": "08/11/24"
-                    },
-                    {
-                        "Title": "Doctor (Telugu)",
-                        "Date": "07/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: The Choice",
-                        "Date": "06/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 2: She Knows",
-                        "Date": "06/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 1: Dog Fight",
-                        "Date": "06/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 1: Rules of the Game",
-                        "Date": "06/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 1: The Shelf Life",
-                        "Date": "06/11/24"
-                    },
-                    {
-                        "Title": "Chhota Bheem aur Krishna vs Zimbara",
-                        "Date": "05/11/24"
-                    },
-                    {
-                        "Title": "Chhota Bheem: The Rise of Kirmada",
-                        "Date": "05/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 2: Hubert",
-                        "Date": "04/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 2: Two-ply (or Not Two-ply)",
-                        "Date": "04/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 2: Carrots",
-                        "Date": "04/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 2: Tough Titmouse",
-                        "Date": "04/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 2: 36 Hours",
-                        "Date": "04/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 2: Middle Ground",
-                        "Date": "04/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 2: Hello",
-                        "Date": "04/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: More",
-                        "Date": "04/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Smile",
-                        "Date": "04/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Pain",
-                        "Date": "04/11/24"
-                    },
-                    {
-                        "Title": "Saripodhaa Sanivaaram",
-                        "Date": "03/11/24"
-                    },
-                    {
-                        "Title": "Guntur Kaaram",
-                        "Date": "03/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Heartfelt",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: She",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Seven Reasons",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Islands: Part 2",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Islands: Part 1",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Sacrifice",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Intangibles",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Apple",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: 22 Steps",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Not Fake",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Point Three Percent",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Pipes",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Oliver",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Mount Rushmore",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "The Good Doctor: Season 1: Burnt Food",
-                        "Date": "02/11/24"
-                    },
-                    {
-                        "Title": "Hi Nanna",
-                        "Date": "01/11/24"
-                    },
-                    {
-                        "Title": "Chhota Bheem: Dholakpur to Kathmandu",
-                        "Date": "01/11/24"
-                    },
-                    {
-                        "Title": "Chhota Bheem: Master of Shaolin",
-                        "Date": "01/11/24"
-                    },
-                    {
-                        "Title": "Beyblade Burst Rise: Ace Dragon! On the Rise!",
-                        "Date": "01/11/24"
-                    },
-                    {
-                        "Title": "Suits: Season 1: Undefeated",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Suits: Season 1: Identity Crisis",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Suits: Season 1: Play the Man",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Suits: Season 1: Tricks of the Trade",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Suits: Season 1: Bail Out",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Suits: Season 1: Dirty Little Secrets",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Suits: Season 1: Inside Track",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Suits: Season 1: Errors and Omissions",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Suits: Season 1: Pilot Part 1 & 2",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Chhota Bheem aur Krishna",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Cook Up A Storm",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Better Call Saul: Season 1: Five-O",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Better Call Saul: Season 1: Alpine Shepherd Boy",
-                        "Date": "30/10/24"
-                    },
-                    {
-                        "Title": "Berlin: Season 1: An Endangered Elephant",
-                        "Date": "29/10/24"
-                    },
-                    {
-                        "Title": "Berlin: Season 1: The Last Virgin in the Western World",
-                        "Date": "29/10/24"
-                    },
-                    {
-                        "Title": "Berlin: Season 1: Anchor and Lobo",
-                        "Date": "29/10/24"
-                    },
-                    {
-                        "Title": "Berlin: Season 1: The Energy of Love",
-                        "Date": "29/10/24"
-                    },
-                    {
-                        "Title": "Berlin: Season 1: Night of the Lemons",
-                        "Date": "29/10/24"
-                    },
-                    {
-                        "Title": "Berlin: Season 1: After Love",
-                        "Date": "29/10/24"
-                    },
-                    {
-                        "Title": "Berlin: Season 1: An Aquarium on Your Back",
-                        "Date": "29/10/24"
-                    },
-                    {
-                        "Title": "Berlin: Season 1: Full House of Embryos",
-                        "Date": "29/10/24"
-                    },
-                    {
-                        "Title": "Meiyazhagan",
-                        "Date": "28/10/24"
-                    },
-                    {
-                        "Title": "Better Call Saul: Season 1: Hero",
-                        "Date": "27/10/24"
-                    },
-                    {
-                        "Title": "Better Call Saul: Season 1: Nacho",
-                        "Date": "27/10/24"
-                    },
-                    {
-                        "Title": "Better Call Saul: Season 1: Mijo",
-                        "Date": "27/10/24"
-                    },
-                    {
-                        "Title": "Better Call Saul: Season 1: Uno",
-                        "Date": "27/10/24"
+                "linkedinUserData": {
+                    "experience": [
+                        {
+                            "jobTitle": "Software Engineer",
+                            "companyName": "The Blue Check by CreatorOS (YC W21)",
+                            "startDate": "Dec 2024",
+                            "endDate": "Present",
+                            "duration": "2 mos",
+                            "location": "",
+                            "description": ""
+                        }
+                    ],
+                    "about": {
+                        "aboutText": ""
+                    },
+                    "hero": {
+                        "fullName": "Avinash Nayak",
+                        "headline": "Full-stack developer with Web3 expertise",
+                        "collegeFromHeroSection": "Indian Institute of Technology, Hyderabad",
+                        "geoLocation": "Karimnagar, Telangana, India",
+                        "connections": "10 connections",
+                        "backgroundImageUrl": "https://static.licdn.com/aero-v1/sc/h/55k1z8997gh8dwtihm11aajyq",
+                        "profilePictureUrl": ""
+                    },
+                    "certifications": [],
+                    "education": [
+                        {
+                            "schoolName": "Indian Institute of Technology, Hyderabad",
+                            "degree": "Bachelor of Technology - BTech Artificial Intelligence",
+                            "years": "",
+                            "logoUrl": "https://media.licdn.com/dms/image/v2/D560BAQF4UTIU_pr10A/company-logo_100_100/company-logo_100_100/0/1707976518475/iithyderabad_logo?e=1746057600&v=beta&t=kXRBcHfp8OZ178Ae1gtsdyT4MZ3f62nJlt8QjJ2Lfyg"
+                        }
+                    ]
+                },
+                "connectionsList": [
+                    {
+                        "name": "Poojitha Mallina",
+                        "headline": "Student at Indian Institute of Technology, Hyderabad",
+                        "url": "https://linkedin.com/in/poojitha-mallina-412926252",
+                        "pfp": "https://media.licdn.com/dms/image/v2/D4D03AQG3gfTgjsG7rQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1732557422797?e=1743638400&v=beta&t=7Kxv4-zdUV--61Weu57f23HcYWWiPE0XoVhJHFZpo-M"
+                    },
+                    {
+                        "name": "Padakanti Bhanu Teja",
+                        "headline": "@Content Creator and Branding Intern - StockGro || IIT HYDERABAD ||",
+                        "url": "https://linkedin.com/in/padakanti-bhanu-teja-706237257",
+                        "pfp": "https://media.licdn.com/dms/image/v2/D5603AQF50O6OLkl20g/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1725241001499?e=1743638400&v=beta&t=8l4c11Vnhosq_InY6J3ZhR1gliZfFlAr6GSpx95RLZ0"
+                    },
+                    {
+                        "name": "ABHISHEK JHA",
+                        "headline": "Full Stack Developer & Ecommerce Specialist | Wordpress WooCommerce Java Springboot Angular ASP.NET C# Python Firebase Ionic Paypal Stripe Instamojo | Developed Biskfarm, TechXavvy and 350+ Sites | Ex-HCL",
+                        "url": "https://linkedin.com/in/speedily",
+                        "pfp": "https://media.licdn.com/dms/image/v2/C5103AQEqB96Ad9K5rw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1559466344455?e=1743638400&v=beta&t=Vk6ORTmBOV2_YGgc91g0P3aC_gMbOU5hfmnpYgJlkHo"
+                    },
+                    {
+                        "name": "Deep Gandhi",
+                        "headline": "Growth at Inco | Ex- Bain | IIT Delhi",
+                        "url": "https://linkedin.com/in/deep-gandhi-4927a9156",
+                        "pfp": "https://media.licdn.com/dms/image/v2/D5603AQGc1NwiGArgkA/profile-displayphoto-shrink_200_200/B56ZOrnOSTGgAY-/0/1733751007921?e=1743638400&v=beta&t=b_DZKD5dVIOfPSKSR71Jwb98tbifhiWjR5PybDcx-o4"
+                    },
+                    {
+                        "name": "Aman Shah",
+                        "headline": "Senior Blockchain Engineer @formidium , ex Mobile Dev (Blockchain) @ Toyow | iOS , Flutter , Tokenisation",
+                        "url": "https://linkedin.com/in/shah-aman",
+                        "pfp": "https://media.licdn.com/dms/image/v2/C4D03AQHB5Hs9aGA7Xw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1652810854661?e=1743638400&v=beta&t=KfbO7reAoiY1k2VQ7muP6QE6ucWdF4yhxUUspI3C98Y"
+                    },
+                    {
+                        "name": "Ryotaro Tsukii",
+                        "headline": "Web3 Development Company | Director of Ginco India",
+                        "url": "https://linkedin.com/in/ryotarotsukii",
+                        "pfp": "https://media.licdn.com/dms/image/v2/D5603AQGoshP08p6-5Q/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1718307799518?e=1743638400&v=beta&t=qluxIu0XIy3EVGbv3UCXyaclPv3zf2b4w-NgcYyJJCM"
+                    },
+                    {
+                        "name": "Maria Alonso",
+                        "headline": "HR Manager | Talent Scout en AstronautVerse Ltd",
+                        "url": "https://linkedin.com/in/maria-alonso-b54b54318",
+                        "pfp": "https://media.licdn.com/dms/image/v2/D4E03AQEUX21m1YjeFA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1721157473268?e=1743638400&v=beta&t=5fNqF14ATtp_uhtETEa5VhE6i9vZxGrw9OD8o8w3P3w"
+                    },
+                    {
+                        "name": "Boldrin Antony",
+                        "headline": "Business Development @ZoWorld | Web 3 Surfer | Building Web3 Kerala | Growth Hacker | Entrepreneur in Residence",
+                        "url": "https://linkedin.com/in/boldrin-antony",
+                        "pfp": "https://media.licdn.com/dms/image/v2/D4D03AQEBNJQeNhjgEQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1677523375555?e=1743638400&v=beta&t=NyOogUgQ1NHbrh4Ht7NAh-KV1-U00jPyImr0OsPDaeo"
+                    },
+                    {
+                        "name": "Seita Uchimura",
+                        "headline": "Mercari - Senior Backend Engineer",
+                        "url": "https://linkedin.com/in/seita-uchimura-040841166",
+                        "pfp": "https://media.licdn.com/dms/image/v2/D4E03AQGp1cUw24Kc6w/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1700496891535?e=1743638400&v=beta&t=bD841jpuPEPVGldRusHHPbmAnVVQrEAZAZMh2HH4vLk"
+                    },
+                    {
+                        "name": "Naresh Kumar",
+                        "headline": "India Ecosystem @Aptos | 3x Founder | Venture Capital | Brand, Marketing & Growth | Bullish on India 🇮🇳",
+                        "url": "https://linkedin.com/in/nareshkx",
+                        "pfp": "https://media.licdn.com/dms/image/v2/C5603AQEzSdDU4vNsaQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1650937079633?e=1743638400&v=beta&t=8hiAVr9_I59wEGgf09ARYv3mWwANvLBUp3gdEnT8114"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "REDDIT",
+            "claimedDate": "2025-01-07T07:04:15.421Z",
+            "witnesses": "wss://witness.reclaim.org/ws",
+            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
+            "AccoundUsername": "username",
+            "securedSharedData": {
+                "blicData": {
+                    "username": "Avinash573",
+                    "pfp": "https://styles.redditmedia.com/t5_dgaddh/styles/profileIcon_9xkfrlbg1jfe1.jpg",
+                    "userid": "t2_1gklztx1et",
+                    "bio": "Exploring things",
+                    "socialLinks": [
+                        "https://twitter.com/Avinashnayak",
+                        "https://instagram.com/avinashnayak27"
+                    ],
+                    "karma": {
+                        "postKarma": 1,
+                        "commentKarma": 0
+                    },
+                    "posts": [
+                        {
+                            "title": "Avinash Hello",
+                            "id": "1idwwda"
+                        },
+                        {
+                            "title": "Hello",
+                            "id": "1ibe2eo"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "UBER",
+            "claimedDate": "2025-01-07T07:04:15.421Z",
+            "witnesses": "wss://witness.reclaim.org/ws/ws0xtrtedgfjiu",
+            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
+            "AccoundUsername": "username",
+            "securedSharedData": {
+                "blicData": {
+                    "trips": [
+                        {
+                            "beginTripTime": "Sun Dec 08 2024 11:32:44 GMT+0000",
+                            "dropoffTime": "Sun Dec 08 2024 11:50:10 GMT+0000",
+                            "pickupAddress": "No. 191, AECS Layout - A Block, AECS Layout, Kundalahalli, Bengaluru, Karnataka 560037, India",
+                            "dropoffAddress": "71, Service Rd, R.J.Gardens, Anand Nagar, Sanjay Nagar, Marathahalli, Bengaluru, Karnataka 560037, India",
+                            "fare": "₹56.00",
+                            "vehicleType": "Moto"
+                        },
+                        {
+                            "beginTripTime": "Sat Dec 07 2024 12:15:22 GMT+0000",
+                            "dropoffTime": "Sat Dec 07 2024 12:23:42 GMT+0000",
+                            "pickupAddress": "KTPO, KIADB Export Promotion Industrial Area, Whitefield, Bengaluru, Karnataka 560048, India",
+                            "dropoffAddress": "No. 191, AECS Layout - A Block, AECS Layout, Kundalahalli, Bengaluru, Karnataka 560037, India",
+                            "fare": "₹33.00",
+                            "vehicleType": "Moto"
+                        },
+                        {
+                            "beginTripTime": "Fri Dec 06 2024 15:07:14 GMT+0000",
+                            "dropoffTime": "Fri Dec 06 2024 15:17:28 GMT+0000",
+                            "pickupAddress": "TOWER-3, GENISYS NOVOZYMES TOASTMASTERS CLUB, Rd Number 5, Vijayanagar, KIADB Export Promotion Industrial Area, Whitefield, Bengaluru, Karnataka 560066, India",
+                            "dropoffAddress": "No. 191, AECS Layout - A Block, AECS Layout, Kundalahalli, Bengaluru, Karnataka 560037, India",
+                            "fare": "₹54.00",
+                            "vehicleType": "Moto"
+                        }
+                    ],
+                    "userid": "54beb68f-2c5d-4c93-ab59-57576cefb23a",
+                    "username": "Avinash Nayak"
+                }
+            }
+        },
+        {
+            "type": "STEAM",
+            "claimedDate": "2025-01-07T07:04:15.421Z",
+            "witnesses": "wss://witness.reclaim.org/ws/ws0xtrtedgfjiu",
+            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
+            "AccoundUsername": "username",
+            "securedSharedData": {
+                "ownedGames": [
+                    "PUBG: BATTLEGROUNDS",
+                    "Marvel Rivals"
+                ],
+                "userId": "76561199719921126"
+            }
+        },
+        {
+            "type": "TWITCH",
+            "claimedDate": "2025-01-07T07:04:15.421Z",
+            "witnesses": "wss://witness.reclaim.org/ws/ws0xtrtedgfjiu",
+            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
+            "AccoundUsername": "username",
+            "securedSharedData": {
+                "username": "avinashnayak27",
+                "followers": 0,
+                "pfpUrl": "https://static-cdn.jtvnw.net/jtv_user_pictures/45919f32-fdc6-49b6-8394-bda13a3bf731-profile_image-150x150.png",
+                "bio": "Exploring things",
+                "socials": [
+                    "https://x.com/avinashnayak27",
+                    "https://bento.me/avinashnayak"
+                ]
+            }
+        },
+        {
+            "type": "AMAZON_PRIME",
+            "claimedDate": "2025-01-07T07:04:15.421Z",
+            "witnesses": "wss://witness.reclaim.org/ws/ws0xtrtedgfjiu",
+            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
+            "AccoundUsername": "username",
+            "securedSharedData": {
+                "profileName": "AVINASH",
+                "watchHistory": {
+                    "January 24, 2025": [
+                        "Beast Games - Season 1",
+                        "American Psycho"
+                    ],
+                    "January 16, 2025": [
+                        "Beast Games - Season 1"
+                    ],
+                    "January 13, 2025": [
+                        "The Rana Daggubati Show"
+                    ],
+                    "January 9, 2025": [
+                        "Beast Games - Season 1"
+                    ],
+                    "January 2, 2025": [
+                        "Beast Games - Season 1"
+                    ],
+                    "December 28, 2024": [
+                        "Beast Games - Season 1"
+                    ],
+                    "December 15, 2024": [
+                        "Mahaan (Telugu) - UHD",
+                        "Om Bheem Bush (No Logic Only Magic)",
+                        "The Rana Daggubati Show"
+                    ],
+                    "December 14, 2024": [
+                        "Swag",
+                        "Agent Sai Srinivasa Athreya"
+                    ],
+                    "December 13, 2024": [
+                        "Jathi Ratnalu (4K UHD)",
+                        "Ee Nagaraniki Emaindi",
+                        "Mechanic Rocky"
+                    ],
+                    "December 12, 2024": [
+                        "HIT (The Second Case)",
+                        "Hit (The First Case)"
+                    ],
+                    "December 11, 2024": [
+                        "Matka",
+                        "Hostel Days (Telugu) - Season 1"
+                    ],
+                    "December 10, 2024": [
+                        "Hostel Days (Telugu) - Season 1"
+                    ],
+                    "December 9, 2024": [
+                        "The Rana Daggubati Show"
+                    ],
+                    "December 8, 2024": [
+                        "Vettaiyan",
+                        "Stree 2: Sarkate Ka Aatank",
+                        "Kalki 2898 AD",
+                        "Kanguva",
+                        "Bangalore Days",
+                        "Appudo Ippudo Eppudo"
+                    ],
+                    "October 5, 2024": [
+                        "Highway Love - Season 2"
+                    ],
+                    "February 23, 2024": [
+                        "Saindhav",
+                        "Ishq Express - Season 1"
+                    ],
+                    "February 18, 2024": [
+                        "It",
+                        "Pindam"
+                    ],
+                    "February 15, 2024": [
+                        "Narappa"
+                    ],
+                    "February 14, 2024": [
+                        "Captain Miller"
+                    ],
+                    "February 10, 2024": [
+                        "RX100",
+                        "Nani's Gang Leader"
+                    ],
+                    "February 9, 2024": [
+                        "Aaha Kalyanam (Telugu Dubbed)",
+                        "Saaho"
+                    ],
+                    "April 1, 2023": [
+                        "Sixer - Season 1"
+                    ],
+                    "July 25, 2022": [
+                        "Recommended For You"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "ZOMATO",
+            "claimedDate": "2025-01-07T07:04:15.421Z",
+            "witnesses": "wss://witness.reclaim.org/ws/ws0xtrtedgfjiu",
+            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
+            "AccoundUsername": "username",
+            "securedSharedData": {
+                "userid": "bablu-254701981",
+                "orders": [
+                    {
+                        "orderId": "6453349300",
+                        "totalCost": "₹296.76",
+                        "dishString": "1 x Kaju Katly [250 Grams]",
+                        "deliveryDetails": {
+                            "deliveryAddress": "8-1-462/1/C, Hanumanager, Karimnagar",
+                            "deliveryStatus": 4,
+                            "deliveryMessage": "This order was delivered successfully. Hope you enjoyed your meal!",
+                            "deliveryLabel": "Delivered"
+                        },
+                        "restaurantURL": "https://www.zomato.com/karimnagar/sri-geetha-sweets-karimnagar-locality-karimnagar-city"
+                    }
+                ]
+            }
+        },
+        {
+            "type": "SPOTIFY",
+            "claimedDate": "2025-01-07T07:04:15.421Z",
+            "witnesses": "wss://witness.reclaim.org/ws/ws0xtrtedgfjiu",
+            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
+            "AccoundUsername": "username",
+            "securedSharedData": {
+                "username": "avinashnayak573",
+                "userPlaylists": [
+                    {
+                        "playlistId": "6CiilBp10vleqfCym6Y5zZ",
+                        "playlistName": "God is within 🙏🏼",
+                        "playlistOwner": "Aksha Chowdary",
+                        "tracks": [
+                            {
+                                "trackName": "Kaala Bhairava Ashtakam",
+                                "trackId": "0eVyRFotL6IEUM1Teg2bKg"
+                            },
+                            {
+                                "trackName": "Sri Anjaneyam",
+                                "trackId": "3roudgaGux5ODgEQqT3Rg6"
+                            },
+                            {
+                                "trackName": "Aigiri Nandini",
+                                "trackId": "2A0ISYAdi4bVdl4tMZcgQs"
+                            },
+                            {
+                                "trackName": "Achyutam Keshavam",
+                                "trackId": "6keoc1INiSsvJ2UT3WiPJJ"
+                            },
+                            {
+                                "trackName": "Breathless Hanuman Chalisa",
+                                "trackId": "2fQkCPduaWi8UkKmzsu7xG"
+                            },
+                            {
+                                "trackName": "Shiva Mantra Ghanapaatha",
+                                "trackId": "1gjqG4t0xjcVw79NJZ1KVA"
+                            },
+                            {
+                                "trackName": "Nirvana Shatakam",
+                                "trackId": "5h8EVSeAeQwJjeV5AzrpGd"
+                            },
+                            {
+                                "trackName": "Maha Ganapatim Manasa Smarami",
+                                "trackId": "5dc83kzXVFZhOSukiIoUQp"
+                            },
+                            {
+                                "trackName": "Samay Samjhayega",
+                                "trackId": "3MhGqG49zBXNTy55c4ZOOz"
+                            },
+                            {
+                                "trackName": "Deva Shree Ganesha",
+                                "trackId": "6Ozx2ngGtXrqznTKhKBlrT"
+                            },
+                            {
+                                "trackName": "Shree Ganeshay Dheemahi",
+                                "trackId": "2w8gfS0KmrNNwcqhKGmefN"
+                            },
+                            {
+                                "trackName": "Sukhakarta Dukhahrta Aarti",
+                                "trackId": "2PRBeMIvSCSJ9felJEfm0q"
+                            },
+                            {
+                                "trackName": "Sita Rama Charitham",
+                                "trackId": "4VwLZDIEXbpFzmqZ4NFScp"
+                            },
+                            {
+                                "trackName": "Sri Ram Ramethi",
+                                "trackId": "0xNdlVuXg43PtDEGK8XzIZ"
+                            },
+                            {
+                                "trackName": "Nanu Brovamani",
+                                "trackId": "3G5EFiP9LGhY7JUX9SVwsi"
+                            },
+                            {
+                                "trackName": "E Therugananu",
+                                "trackId": "56ocTOqMA7aTpahNZa4aJT"
+                            },
+                            {
+                                "trackName": "Sri Venkateshwara Suprabhatham",
+                                "trackId": "1C2MHvFmeoFpExBtWOiQ4Z"
+                            },
+                            {
+                                "trackName": "Muddugare Yesoda - Priya Sisters",
+                                "trackId": "3Q7ZjWU5nfxr6BHxggYPuq"
+                            },
+                            {
+                                "trackName": "Bhagawadh Geetha - Sanskrit",
+                                "trackId": "7yaPa1APq9hdOogSjxbhof"
+                            },
+                            {
+                                "trackName": "Harivarasanam",
+                                "trackId": "1QNB2qyQkAD6uZMXzrip1I"
+                            },
+                            {
+                                "trackName": "Hai Katha Sangram Ki",
+                                "trackId": "62k0KcwOSbDrMnNubGg8Lj"
+                            },
+                            {
+                                "trackName": "Aatagadaraa Sivaa",
+                                "trackId": "12NA3ZQYOAHCKjF35sARkj"
+                            },
+                            {
+                                "trackName": "Garuda Gamana",
+                                "trackId": "1LHjA5J8jl7dQb9ZKn1Noa"
+                            },
+                            {
+                                "trackName": "Kandha Shasti Kavasam",
+                                "trackId": "5upAhmHAZ1oM01H07P3Djg"
+                            },
+                            {
+                                "trackName": "Sri Venkatesha Stotram",
+                                "trackId": "7FmpLwSIjGbFDopijOquP7"
+                            }
+                        ]
+                    },
+                    {
+                        "playlistId": "6SPnpdaTj35uvaJ5fDv9aM",
+                        "playlistName": "Avinash",
+                        "playlistOwner": "avinashnayak573",
+                        "tracks": [
+                            {
+                                "trackName": "Enno Ratrulosthayi Remix Song",
+                                "trackId": "3HbGXLKLyWnCX4VQOQbAGM"
+                            }
+                        ]
+                    }
+                ],
+                "recentlyPlayed": [
+                    {
+                        "trackName": "Entha Chitram Kada",
+                        "trackId": "5ukroYak9DL47D82yNBAfU"
+                    },
+                    {
+                        "trackName": "Bruce Lee",
+                        "trackId": "5hptAVmfMovgSldoJwcG95"
+                    },
+                    {
+                        "trackName": "Guvva Gorinkatho",
+                        "trackId": "62HclXbyPW0UaqobR9TIWG"
+                    },
+                    {
+                        "trackName": "Emantaro",
+                        "trackId": "7GRBX2LsuIYGPzjZ9ggnES"
+                    },
+                    {
+                        "trackName": "Enno Ratrulosthayi Remix Song",
+                        "trackId": "3HbGXLKLyWnCX4VQOQbAGM"
+                    },
+                    {
+                        "trackName": "Peelings (From \"Pushpa 2 The Rule\") [TELUGU]",
+                        "trackId": "6reHcXJekQ2csk0UazSBV1"
+                    },
+                    {
+                        "trackName": "Ayyo Paapam Saaru (From \"G.O.A.T\")",
+                        "trackId": "1czrjBn1bdacy6tfuBQx4R"
                     }
                 ]
             }
