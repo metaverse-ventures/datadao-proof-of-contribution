@@ -147,19 +147,15 @@ def get_unique_entries(comparison_results):
     ]
 
 def download_file(file_url, save_path):
-    try:
-        response = requests.get(file_url, stream=True)
-        response.raise_for_status()  # This will raise an exception for HTTP errors (400, 404, etc.)
-        
+    response = requests.get(file_url, stream=True)
+    
+    if response.status_code == 200:
         with open(save_path, 'wb') as file:
             for chunk in response.iter_content(chunk_size=8192):
                 file.write(chunk)
-
         return save_path  # File downloaded successfully
-
-    except requests.exceptions.HTTPError as e:
-        logging.error(f"Failed to download {file_url}: {e}")
-        return None  # Return None to indicate failure
+    
+    return None  # Return None if file is not found or any other non-200 response
 
 def download_and_decrypt(file_url, signature):
     try:
@@ -309,6 +305,7 @@ def main(curr_file_id, curr_input_data, file_list):
 def uniqueness_helper(curr_input_data):
     wallet_address = curr_input_data.get('walletAddress')
     file_list = get_file_details_from_wallet_address(wallet_address) #TODO: add this later on
+    logging.info(f"File list: {file_list}")
     # file_list = [
     #     {"fileId": 4, "fileUrl":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}, 
     #     # {"fileId": 4, "fileUrl":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
@@ -316,6 +313,7 @@ def uniqueness_helper(curr_input_data):
     #     # {"fileId": 11, "fileUrl":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
     # ]
     curr_file_id = os.environ.get('FILE_ID') 
+    logging.info(f"Current file id: {curr_file_id}")
     response = main(curr_file_id, curr_input_data, file_list)
     res = {
         "unique_entries": get_unique_entries(response.get("result")),
