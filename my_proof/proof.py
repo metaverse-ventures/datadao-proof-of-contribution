@@ -111,10 +111,10 @@ class Proof:
     def calculate_final_score(self, proof_response_object: Dict[str, Any]) -> float:
         attributes = ['authenticity', 'uniqueness', 'quality', 'ownership']
         weights = {
-            'authenticity': 0.004,  # Low weight for authenticity
-            'ownership': 0.006,  # Slightly higher than authenticity
-            'uniqueness': 0.395,  # Moderate weight for uniqueness
-            'quality': 0.555  # High weight for quality
+            'authenticity': 0.003,  # Low weight for authenticity
+            'ownership': 0.005,  # Slightly higher than authenticity
+            'uniqueness': 0.342,  # Moderate weight for uniqueness
+            'quality': 0.650  # High weight for quality
         }
 
         weighted_sum = 0.0
