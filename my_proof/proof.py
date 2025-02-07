@@ -113,8 +113,8 @@ class Proof:
         weights = {
             'authenticity': 0.004,  # Low weight for authenticity
             'ownership': 0.006,  # Slightly higher than authenticity
-            'quality': 0.395,  # Moderate weight for quality
-            'uniqueness': 0.555  # High weight for uniqueness
+            'uniqueness': 0.395,  # Moderate weight for uniqueness
+            'quality': 0.555  # High weight for quality
         }
 
         weighted_sum = 0.0
