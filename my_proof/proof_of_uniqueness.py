@@ -12,7 +12,6 @@ import gnupg
 # Connect to Redis
 def get_redis_client():
     try:
-        # TODO: For local testing comment this
         redis_client = redis.StrictRedis(
             host= os.environ.get('REDIS_HOST', None),
             port= os.environ.get('REDIS_PORT', 0),
@@ -301,17 +300,10 @@ def main(curr_file_id, curr_input_data, file_list):
         "result": response["comparison_results"] 
     }
 
-# TODO: Modify for multiple file downloads
 def uniqueness_helper(curr_input_data):
     wallet_address = curr_input_data.get('walletAddress')
-    file_list = get_file_details_from_wallet_address(wallet_address) #TODO: add this later on
+    file_list = get_file_details_from_wallet_address(wallet_address) 
     logging.info(f"File list: {file_list}")
-    # file_list = [
-    #     {"fileId": 4, "fileUrl":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"}, 
-    #     # {"fileId": 4, "fileUrl":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
-    #     # {"fileId": 5, "fileUrl":"https://drive.google.com/uc?export=download&id=1unoDd1-DM6vwtdEpAdeUaVctossu_DhA"},
-    #     # {"fileId": 11, "fileUrl":"https://drive.usercontent.google.com/download?id=1RFugr1lIfnt8Rzuw0TQ9_6brzZEer2PZ&export=download&authuser=0"}, 
-    # ]
     curr_file_id = os.environ.get('FILE_ID') 
     logging.info(f"Current file id: {curr_file_id}")
     response = main(curr_file_id, curr_input_data, file_list)

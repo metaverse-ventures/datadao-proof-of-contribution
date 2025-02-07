@@ -1,8 +1,4 @@
-# proof_of_quality.py
-import pandas as pd
-import os
 import logging
-from typing import Dict, Any
 
 points = {
     "REDDIT":50,
@@ -31,39 +27,6 @@ def get_dynamic_task_score(uniqueness_count, task_type):
         return max_point * 0.1
     else:
         return 0
-
-def calculate_browser_history_score(csv_path):
-    df = pd.read_csv(csv_path)
-    df['DateTime'] = pd.to_datetime(df['DateTime'])
-
-    unique_rows = df.drop_duplicates(subset=['DateTime', 'NavigatedToUrl', 'PageTitle'])
-    unique_count = len(unique_rows)
-    base_score = 50
-
-    if unique_count > 10000:
-        uniqueness_score = base_score
-    elif unique_count > 5000:
-        uniqueness_score = 0.7 * base_score
-    elif unique_count > 2000:
-        uniqueness_score = 0.5 * base_score
-    elif unique_count > 10:
-        uniqueness_score = 0.05 * base_score
-    else:
-        uniqueness_score = 0
-
-    max_date_diff = (df['DateTime'].max() - df['DateTime'].min()).days
-
-    if max_date_diff > 180:
-        date_range_score = 50
-    elif 120 <= max_date_diff <= 180:
-        date_range_score = 0.5 * 50
-    else:
-        date_range_score = 0
-
-    total_score = int(uniqueness_score + date_range_score) / 2
-
-    logging.info(f"Browser History Score: {total_score}")
-    return total_score
 
 def calculate_quality_score(input_data, config, unique_entry_details):
     """Calculate quality score based on contribution data and input files."""
@@ -96,15 +59,6 @@ def calculate_quality_score(input_data, config, unique_entry_details):
 
         final_scores[task_type] = score
         total_secured_score += score
-
-    # Check for CSV files starting with 'BrowserHistory' in the input directory
-    csv_file = [f for f in os.listdir(config['input_dir']) if f.startswith("BrowserHistory") and f.endswith(".csv")]
-    browser_history_score = 0
-    if csv_file:
-        csv_path = os.path.join(config['input_dir'], csv_file[0])
-        browser_history_score = calculate_browser_history_score(csv_path)
-        total_secured_score += browser_history_score
-        total_max_score += 50
 
     total_max_score += calculate_max_points(points)
 

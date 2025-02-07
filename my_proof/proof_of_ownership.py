@@ -11,7 +11,7 @@ def generate_jwt_token(wallet_address: str, secret_key: str, expiration_time: in
 
     payload = {
         'exp': exp,
-        'walletAddress': wallet_address  # Add wallet address to the payload
+        'walletAddress': wallet_address  # Send wallet address to the payload
     }
     
     # Encode the JWT

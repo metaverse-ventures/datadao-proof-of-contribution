@@ -6,10 +6,10 @@ WORKDIR /app
 
 COPY . /app
 
-# Install any needed packages specified in requirements.txt
 # Install python-gnupg
 RUN pip install --no-cache-dir python-gnupg
 
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 CMD ["python", "-m", "my_proof"]
