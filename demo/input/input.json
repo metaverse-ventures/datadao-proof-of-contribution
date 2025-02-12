@@ -1,0 +1,20 @@
+{
+    "walletAddress": "0x1059ed65ad58ffc83642c9be3f24c250905a28fb",
+    "claimDate": "2025-02-12T06:37:35.936Z",
+    "contributions": [
+        {
+            "type": "TWITCH",
+            "claimedDate": "2025-02-11T06:06:58.001Z",
+            "witnesses": "wss://attestor.reclaimprotocol.org/ws0x244897572368eadf65bfbc5aec98d8e5443a9072",
+            "walletAddress": "0x1059Ed65AD58ffc83642C9Be3f24C250905a28FB",
+            "AccoundUsername": "twitchvalebhaiya",
+            "securedSharedData": {
+                "username": "twitchvalebhaiya",
+                "followers": 0,
+                "pfpUrl": "https://static-cdn.jtvnw.net/user-default-pictures-uv/ebe4cd89-b4f4-4cd9-adac-2f30151b4209-profile_image-150x150.png",
+                "bio": null,
+                "socials": []
+            }
+        }
+    ]
+}

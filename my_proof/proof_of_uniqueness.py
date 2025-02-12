@@ -241,7 +241,7 @@ def get_file_details_from_wallet_address(wallet_address):
 
 def main(curr_file_id, curr_input_data, file_list):
     redis_client = get_redis_client()
-    processed_curr_data = process_secured_data(curr_input_data.get("contribution", []))
+    processed_curr_data = process_secured_data(curr_input_data.get("contributions", []))
     processed_old_data = []
     sign = os.environ.get("SIGNATURE")
     if redis_client:
@@ -268,7 +268,7 @@ def main(curr_file_id, curr_input_data, file_list):
                     with open(decrypted_data, 'r', encoding="utf-8") as json_file:
                         downloaded_data = json.load(json_file)
                     # Process and append the new data
-                    processed_old_data += process_secured_data(downloaded_data.get("contribution"))
+                    processed_old_data += process_secured_data(downloaded_data.get("contributions"))
 
         logging.info(f"Processed Redis data: {processed_old_data}")
 
@@ -285,7 +285,7 @@ def main(curr_file_id, curr_input_data, file_list):
                 # Load data from the decrypted JSON file
                 with open(decrypted_data, 'r', encoding="utf-8") as json_file:
                     downloaded_data = json.load(json_file)
-                processed_old_data += process_secured_data(downloaded_data.get("contribution"))
+                processed_old_data += process_secured_data(downloaded_data.get("contributions"))
 
     # Store current data in Redis if available
     if redis_client:

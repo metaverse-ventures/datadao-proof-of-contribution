@@ -84,12 +84,12 @@ class Proof:
 
     def extract_wallet_address_and_types(self, input_data):
         wallet_address = input_data.get('walletAddress')
-        types = [contribution.get('type') for contribution in input_data.get('contribution', [])]
+        types = [contribution.get('type') for contribution in input_data.get('contributions', [])]
         return  {'walletAddress': wallet_address, 'types': types}
 
     def calculate_authenticity_score(self, input_data: Dict[str, Any]) -> float:
         """Calculate authenticity score."""
-        contributions = input_data.get('contribution', [])
+        contributions = input_data.get('contributions', [])
         valid_domains = ["wss://witness.reclaimprotocol.org/ws", "reclaimprotocol.org"]
         return calculate_authenticity_score(contributions, valid_domains)
 

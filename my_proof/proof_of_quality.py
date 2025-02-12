@@ -44,7 +44,7 @@ def calculate_quality_score(input_data, config, unique_entry_details):
         for entry in unique_entry_details
     }
     # Loop through each contribution in the input data
-    for contribution in input_data['contribution']:
+    for contribution in input_data['contributions']:
         task_type = contribution['type']
         securedSharedData = contribution['securedSharedData']
         type_unique_count = unique_entries_dict.get(task_type)["unique_entry_count"] # Get unique entries if available
