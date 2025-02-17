@@ -1,16 +1,16 @@
 import logging
 
 points = {
-    "REDDIT":50,
-    "STEAM":50,
-    "UBER":50,
-    "LINKEDIN":50,
-    "TWITCH":50,
-    "AMAZON_PRIME":50,
-    "NETFLIX":50,
-    "ZOMATO":50,
-    "SPOTIFY":50,
-    "TWITTER":50,
+    "REDDIT":15,
+    "STEAM":10,
+    "UBER":15,
+    "LINKEDIN":25,
+    "TWITCH":10,
+    "AMAZON_PRIME":25,
+    "NETFLIX":25,
+    "ZOMATO":15,
+    "SPOTIFY":15,
+    "TWITTER":10,
 }
 
 def calculate_max_points(points_dict):
