@@ -1,16 +1,17 @@
 import logging
 
 points = {
-    "REDDIT":15,
-    "STEAM":10,
-    "UBER":15,
-    "LINKEDIN":25,
-    "TWITCH":10,
-    "AMAZON_PRIME":25,
-    "NETFLIX":25,
-    "ZOMATO":15,
-    "SPOTIFY":15,
-    "TWITTER":10,
+    "REDDIT":50,
+    "STEAM":50,
+    "UBER":50,
+    "LINKEDIN":50,
+    "TWITCH":50,
+    "AMAZON_PRIME":50,
+    "NETFLIX":50,
+    "ZOMATO":50,
+    "SPOTIFY":50,
+    "TWITTER":50,
+    "GITHUB":50
 }
 
 def calculate_max_points(points_dict):
@@ -50,17 +51,18 @@ def calculate_quality_score(input_data, config, unique_entry_details):
         type_unique_count = unique_entries_dict.get(task_type)["unique_entry_count"] # Get unique entries if available
         type_uniqueness_score = unique_entries_dict.get(task_type)["type_unique_score"] 
 
+        if task_type in points:
+            total_max_score += points[task_type] # Only sum max scores for submitted types
+        
         if task_type in ['UBER', 'AMAZON_PRIME', 'ZOMATO', 'SPOTIFY', 'NETFLIX']:
             score = get_dynamic_task_score(type_unique_count, task_type)  # Use unique_entries instead of order_count
-        elif task_type in ['REDDIT', 'STEAM', 'TWITCH',' TWITTER', 'LINKEDIN']:
+        elif task_type in ['REDDIT', 'STEAM', 'TWITCH',' TWITTER', 'LINKEDIN', 'GITHUB']:
             score = points[task_type] * type_uniqueness_score
         else:
             score = 0  # Default score for unknown types
 
         final_scores[task_type] = score
         total_secured_score += score
-
-    total_max_score += calculate_max_points(points)
 
     # Normalize the total score
     normalized_total_score = total_secured_score / total_max_score if total_max_score > 0 else 0
