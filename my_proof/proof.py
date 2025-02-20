@@ -43,9 +43,9 @@ class Proof:
 
                 logging.info(f"Processing file: {input_filename}")
                
-                self.proof_response_object['ownership'] = 1.0
-                # wallet_w_types = self.extract_wallet_address_and_types(input_data) 
-                # self.proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_types)
+                # self.proof_response_object['ownership'] = 1.0
+                wallet_w_types = self.extract_wallet_address_and_types(input_data) 
+                self.proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_types)
                 input_hash_details = uniqueness_helper(input_data)
                 unique_entry_details = input_hash_details.get("unique_entries")
 
