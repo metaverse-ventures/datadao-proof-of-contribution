@@ -1,17 +1,17 @@
 import logging
 
 points = {
-    "REDDIT":50,
-    "STEAM":50,
-    "UBER":50,
-    "LINKEDIN":50,
-    "TWITCH":50,
-    "AMAZON_PRIME":50,
-    "NETFLIX":50,
-    "ZOMATO":50,
-    "SPOTIFY":50,
-    "TWITTER":50,
-    "GITHUB":50
+    "REDDIT":15,
+    "STEAM":10,
+    "UBER":15,
+    "LINKEDIN":25,
+    "TWITCH":10,
+    "AMAZON_PRIME":25,
+    "NETFLIX":25,
+    "ZOMATO":15,
+    "SPOTIFY":15,
+    "GITHUB": 10,
+    "TWITTER":10,
 }
 
 def calculate_max_points(points_dict):
@@ -29,10 +29,10 @@ def get_dynamic_task_score(uniqueness_count, task_type):
     else:
         return 0
 
-def calculate_quality_score(input_data, config, unique_entry_details):
+def calculate_quality_n_type_score(input_data, config, unique_entry_details):
     """Calculate quality score based on contribution data and input files."""
-    final_scores = {}
-    total_secured_score = 0
+    type_scores = {}
+    total_secured_points = 0
     total_max_score = 0
 
     # Convert unique_entry_details into a dictionary for quick lookup
@@ -55,21 +55,29 @@ def calculate_quality_score(input_data, config, unique_entry_details):
             total_max_score += points[task_type] # Only sum max scores for submitted types
         
         if task_type in ['UBER', 'AMAZON_PRIME', 'ZOMATO', 'SPOTIFY', 'NETFLIX']:
-            score = get_dynamic_task_score(type_unique_count, task_type)  # Use unique_entries instead of order_count
+            type_points = get_dynamic_task_score(type_unique_count, task_type)  # Use unique_entries instead of order_count
+            type_quality_score = type_points / points[task_type] if points[task_type] > 0 else 0
         elif task_type in ['REDDIT', 'STEAM', 'TWITCH',' TWITTER', 'LINKEDIN', 'GITHUB']:
-            score = points[task_type] * type_uniqueness_score
+            type_points = points[task_type] * type_uniqueness_score
+            type_quality_score = type_points / points[task_type] if points[task_type] > 0 else 0
         else:
-            score = 0  # Default score for unknown types
+            type_points = 0  # Default type_points for unknown types
+            type_quality_score = 0
 
-        final_scores[task_type] = score
-        total_secured_score += score
+        type_scores[task_type] = {
+            "type_points": type_points,
+            "type_uniqueness_score": type_uniqueness_score,
+            "type_quality_score": type_quality_score
+        }
+        total_secured_points += type_points
 
     # Normalize the total score
-    normalized_total_score = total_secured_score / total_max_score if total_max_score > 0 else 0
+    normalized_total_score = total_secured_points / total_max_score if total_max_score > 0 else 0
 
     # Log the results
-    logging.info(f"Total Secured Score: {total_secured_score}")
+    logging.info(f"Final Scores: {type_scores}")
+    logging.info(f"Total Secured Score: {total_secured_points}")
     logging.info(f"Total Max Score: {total_max_score}")
     logging.info(f"Normalized Total Score: {normalized_total_score}")
 
-    return normalized_total_score
+    return {"quality_score" : normalized_total_score, "type_scores": type_scores}
