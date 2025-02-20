@@ -1,10 +1,10 @@
-from typing import List, Dict
+from typing import Any, List, Dict
 
-def calculate_authenticity_score(contributions: List[Dict[str, any]], valid_domains: List[str]) -> float:
-    """Calculate authenticity score by verifying contribution witnesses against valid domains."""
+def calculate_authenticity_score(contributions: List[Dict[str, Any]], valid_domains: List[str]) -> float:
+    """Calculate authenticity score by verifying if witness URLs contain any valid domain."""
     valid_count = sum(
         1 for contribution in contributions
-        if contribution.get('witnesses', '').endswith(tuple(valid_domains))
+        if any(domain in contribution.get('witnesses', '') for domain in valid_domains)
     )
 
     return valid_count / len(contributions) if contributions else 0
