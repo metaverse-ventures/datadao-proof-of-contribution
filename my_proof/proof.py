@@ -11,7 +11,7 @@ from datetime import datetime, timedelta, timezone
 
 from my_proof.proof_of_authenticity import calculate_authenticity_score
 from my_proof.proof_of_ownership import calculate_ownership_score, generate_jwt_token
-from my_proof.proof_of_quality import calculate_quality_n_type_score
+from my_proof.proof_of_quality import calculate_quality_n_type_score, points, calculate_max_points
 from my_proof.proof_of_uniqueness import uniqueness_helper
 from my_proof.models.proof_response import ProofResponse
 
@@ -30,7 +30,7 @@ class Proof:
             'dlp_id': self.config.get('dlp_id', '24'),
             'valid': True,
         }
-        
+
     def generate(self) -> ProofResponse:
         """Generate proofs for all input files."""
         logging.info("Starting proof generation")
@@ -43,21 +43,27 @@ class Proof:
 
                 logging.info(f"Processing file: {input_filename}")
                
-                # self.proof_response_object['ownership'] = 1.0
-                wallet_w_types = self.extract_wallet_address_and_types(input_data) 
-                self.proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_types)
+                self.proof_response_object['ownership'] = 1.0
+                # wallet_w_types = self.extract_wallet_address_and_types(input_data) 
+                # self.proof_response_object['ownership'] = self.calculate_ownership_score(wallet_w_types)
                 input_hash_details = uniqueness_helper(input_data)
                 unique_entry_details = input_hash_details.get("unique_entries")
-                self.proof_response_object['uniqueness'] = input_hash_details.get("uniqueness_score")
-                self.proof_response_object['quality'] = self.calculate_quality_score(input_data, unique_entry_details)
-                self.proof_response_object['authenticity'] = self.calculate_authenticity_score(input_data)
+
+                final_scores =  self.calculate_individual_scores(input_data, self.config, unique_entry_details, valid_domains=["reclaimprotocol.org"])
+                self.proof_response_object['uniqueness'] = final_scores['uniqueness_score']
+                self.proof_response_object['quality'] = final_scores['quality_score']
+                self.proof_response_object['authenticity'] = final_scores['authenticity_score']
+                self.proof_response_object['score'] = final_scores['score']
+
+                # self.proof_response_object['uniqueness'] = input_hash_details.get("uniqueness_score")
+                # self.proof_response_object['quality'] = self.calculate_quality_score(input_data, unique_entry_details)
+                # self.proof_response_object['authenticity'] = self.calculate_authenticity_score(input_data)
 
                 if self.proof_response_object['authenticity'] < 1.0:
                     self.proof_response_object['valid'] = False
 
                 # Calculate the final score
-                self.proof_response_object['score'] = self.calculate_individual_scores(input_data, self.config, unique_entry_details, valid_domains=["reclaimprotocol.org"])
-                # self.calculate_final_score(self.proof_response_object)
+                # self.proof_response_object['score'] = self.calculate_final_score(self.proof_response_object)
 
                 # self.proof_response_object['attributes'] = {
                 #     # 'normalizedContributionScore': contribution_score_result['normalized_dynamic_score'],
@@ -147,6 +153,16 @@ class Proof:
                 "individual_score": (type_scores[task_type]["type_quality_score"] + type_scores[task_type]["type_uniqueness_score"] + authenticity_scores.get(task_type, 0) + self.proof_response_object['ownership']) / 4
             }
         
-        final_score = sum(score["individual_score"] for score in final_scores.values()) / len(final_scores)
-        logging.info(f"Final Individual Scores: {final_scores}")
-        return final_score
+        # return average uniqueness score, quality score, authenticity score, and ownership score
+        return {
+            "uniqueness_score": sum(score["uniqueness_score"] for score in final_scores.values()) / len(final_scores),
+            "quality_score": sum(score["quality_score"] for score in final_scores.values()) / len(final_scores),
+            "authenticity_score": sum(score["authenticity_score"] for score in final_scores.values()) / len(final_scores),
+            "ownership_score": sum(score["ownership_score"] for score in final_scores.values()) / len(final_scores),
+            "score": sum(score["type_points"] for score in final_scores.values()) / calculate_max_points(points)
+        }
+
+
+        # final_score = sum(score["individual_score"] for score in final_scores.values()) / len(final_scores)
+        # logging.info(f"Final Individual Scores: {final_scores}")
+        # return final_score
