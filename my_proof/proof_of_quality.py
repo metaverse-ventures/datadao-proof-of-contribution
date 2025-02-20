@@ -57,7 +57,7 @@ def calculate_quality_n_type_score(input_data, config, unique_entry_details):
         if task_type in ['UBER', 'AMAZON_PRIME', 'ZOMATO', 'SPOTIFY', 'NETFLIX']:
             type_points = get_dynamic_task_score(type_unique_count, task_type)  # Use unique_entries instead of order_count
             type_quality_score = type_points / points[task_type] if points[task_type] > 0 else 0
-        elif task_type in ['REDDIT', 'STEAM', 'TWITCH',' TWITTER', 'LINKEDIN', 'GITHUB']:
+        elif task_type in ['REDDIT', 'STEAM', 'TWITCH', 'TWITTER', 'LINKEDIN', 'GITHUB']:
             type_points = points[task_type] * type_uniqueness_score
             type_quality_score = type_points / points[task_type] if points[task_type] > 0 else 0
         else:
