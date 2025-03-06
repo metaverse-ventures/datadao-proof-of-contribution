@@ -11,27 +11,29 @@ def generate_jwt_token(wallet_address: str, secret_key: str, expiration_time: in
 
     payload = {
         'exp': exp,
-        'walletAddress': wallet_address  # Add wallet address to the payload
+        'walletAddress': wallet_address  # Send wallet address to the payload
     }
     
     # Encode the JWT
     token = jwt_encode(payload, secret_key, algorithm='HS256')
     return token
 
-
 def calculate_ownership_score(jwt_token: str, data: dict, validator_url: str) -> float:
     """Calculate ownership score by verifying data against an external API."""
     if not jwt_token or not isinstance(jwt_token, str):
         raise ValueError('JWT token is required and must be a string')
-    if not data.get('walletAddress') or len(data.get('subType', [])) == 0:
-        raise ValueError('Invalid data format. Ensure walletAddress is a non-empty string and subType is a non-empty array.')
+    if not data.get('walletAddress') or len(data.get('types', [])) == 0:
+        raise ValueError('Invalid data format. Ensure walletAddress is a non-empty string and types is a non-empty array.')
 
     try:
         headers = {
             'Authorization': f'Bearer {jwt_token}',  # Attach JWT token in the Authorization header
         }
 
-        response = requests.post(validator_url, json=data, headers=headers)
+        endpoint = "/api/datavalidation"
+        url = f"{validator_url.rstrip('/')}{endpoint}"
+
+        response = requests.post(url, json=data, headers=headers)
 
         response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
 
