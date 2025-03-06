@@ -8,6 +8,8 @@ import os
 from urllib.parse import urlparse
 import requests
 import gnupg
+from jwt import encode as jwt_encode
+from datetime import datetime, timedelta, timezone
 
 # Connect to Redis
 def get_redis_client():
@@ -224,13 +226,39 @@ def download_and_decrypt(file_url, signature):
         return None
 
 
+# Fetch file mappings from API
+def generate_jwt_token(wallet_address: str, secret_key: str, expiration_time: int) -> str:
+    """Generate a JWT token for a given wallet address."""
+    exp = datetime.now(timezone.utc) + timedelta(seconds=expiration_time)
+
+    payload = {
+        'exp': exp,
+        'walletAddress': wallet_address  # Send wallet address in the payload
+    }
+    
+    # Encode the JWT
+    token = jwt_encode(payload, secret_key, algorithm='HS256')
+    return token
+
 def get_file_details_from_wallet_address(wallet_address):
+    """Fetch file mappings for a given wallet address with JWT authentication."""
     validator_base_api_url = os.environ.get('VALIDATOR_BASE_API_URL')
+    secret_key = os.environ.get('JWT_SECRET_KEY')  # Retrieve the secret key from environment variables
+    expiration_time = 600  # JWT expiration time in seconds (10 minutes)
+
+    if not validator_base_api_url or not secret_key:
+        raise ValueError("VALIDATOR_BASE_API_URL and JWT_SECRET_KEY must be set in environment variables.")
+
+    jwt_token = generate_jwt_token(wallet_address, secret_key, expiration_time)
+
     endpoint = "/api/userinfo"
     url = f"{validator_base_api_url.rstrip('/')}{endpoint}"
 
     payload = {"walletAddress": wallet_address}  # Send walletAddress in the body
-    headers = {"Content-Type": "application/json"}  # Set headers for JSON request
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {jwt_token}"  # Attach JWT token
+    }
 
     response = requests.post(url, json=payload, headers=headers)  # Make POST request
 
